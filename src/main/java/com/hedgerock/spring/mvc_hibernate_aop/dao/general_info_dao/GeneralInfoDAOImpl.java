@@ -227,7 +227,7 @@ public class GeneralInfoDAOImpl implements GeneralInfoDAO {
     public <T> Page<T> getCurrentEntitiesPage(Class<T> tClass, String entityName, Pageable pageable) {
         final Session session = this.sessionFactory.getCurrentSession();
 
-        String hql = String.format("FROM %s entity LEFT JOIN FETCH entity.authorities ORDER BY entity.creationDate DESC",
+        String hql = String.format("FROM %s entity ORDER BY entity.creationDate DESC",
                 entityName);
 
         Query<T> query = session.createQuery(hql, tClass);

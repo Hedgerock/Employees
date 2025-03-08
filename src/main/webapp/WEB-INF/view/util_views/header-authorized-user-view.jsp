@@ -11,6 +11,15 @@
             <c:param name="user" value="${ user }" />
         </c:url>
 
+        <c:choose>
+            <c:when test="${ mode }">
+                <c:url var="themeMode" value="/lightMode" />
+            </c:when>
+            <c:otherwise>
+                <c:url var="themeMode" value="/darkMode" />
+            </c:otherwise>
+        </c:choose>
+
         <ul class="authorized-user-list authorized-user-list_invisible">
             <li class="authorized-user-list__item">
                 <a 
@@ -25,17 +34,33 @@
                 </a>
             </li>
             <li class="authorized-user-list__item">
-                <div
+                <a 
                     class="list-content"
+                    href="${ themeMode }" 
+                    title="${ user } theme"
                 >
                     <span>
-                        <i class="fa-solid fa-sun"></i>
+                        <c:choose>
+                            <c:when test="${ mode }">
+                                <i class="fa-solid fa-moon"></i>
+                            </c:when>
+                            <c:otherwise>
+                                <i class="fa-solid fa-sun"></i>
+                            </c:otherwise>
+                        </c:choose>
                     </span>
                     <span>
-                        Light mode
+                        ${ mode ? 'Dark mode' : 'Light mode' }
                     </span>
                     <button>
-                        <i class="fa-solid fa-toggle-off"></i>
+                        <c:choose>
+                            <c:when test="${ mode }">
+                                <i class="fa-solid fa-toggle-on"></i>
+                            </c:when>
+                            <c:otherwise>
+                                <i class="fa-solid fa-toggle-off"></i>
+                            </c:otherwise>
+                        </c:choose>
                     </button>
                 </a>
             </li>

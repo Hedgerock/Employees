@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import static com.hedgerock.spring.mvc_hibernate_aop.utils.Attributes.ALL_EMPLOYEES_ATTRIBUTE;
@@ -16,6 +17,13 @@ import static com.hedgerock.spring.mvc_hibernate_aop.utils.default_parameters.Se
 
 @Controller
 public class HistoryListController extends MyController {
+
+    @ModelAttribute
+    private void globalAttr(
+            Model model
+    ) {
+        model.addAttribute("pagePath", "historyList");
+    }
 
     @GetMapping("/historyList")
     public String getHistoryList(
@@ -31,7 +39,7 @@ public class HistoryListController extends MyController {
 
         model.addAttribute(ALL_EMPLOYEES_ATTRIBUTE, employeeList.getContent());
 
-        return "history/history-list-view";
+        return MAIN_VIEW;
     }
 
 }

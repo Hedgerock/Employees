@@ -1823,6 +1823,9 @@ footer span {
     flex-direction: var(--flexDirection);
 
     gap: var(--thinGap);
+
+    height: var(--allArea);
+    overflow-y: auto;
 }
 
 .user-content__value {
@@ -1945,6 +1948,16 @@ footer span {
     color: var(--mainTxtClr);
 
     font-size: var(--fontSize30);
+}
+
+.settings-list {
+    display: var(--flexDisplay);
+    flex-direction: var(--flexDirection);
+    gap: var(--thinGap);
+}
+
+.settings-list__item {
+    border-bottom: 2px solid var(--mainTxtClr);
 }
 
 @media (max-width: 1150px) {

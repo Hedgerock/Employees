@@ -1,5 +1,6 @@
 package com.hedgerock.spring.mvc_hibernate_aop.controller;
 
+import com.hedgerock.spring.mvc_hibernate_aop.entity.User;
 import com.hedgerock.spring.mvc_hibernate_aop.service.city_service.CityService;
 import com.hedgerock.spring.mvc_hibernate_aop.service.department_service.DepartmentService;
 import com.hedgerock.spring.mvc_hibernate_aop.service.email_service.EmailService;
@@ -14,9 +15,12 @@ import com.hedgerock.spring.mvc_hibernate_aop.utils.Attributes;
 import com.hedgerock.spring.mvc_hibernate_aop.utils.Views;
 import com.hedgerock.spring.mvc_hibernate_aop.utils.default_parameters.SetDefaultParameters;
 import jakarta.servlet.ServletContext;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -24,12 +28,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static com.hedgerock.spring.mvc_hibernate_aop.utils.Attributes.DEFAULT_PAGE_SIZE;
 import static com.hedgerock.spring.mvc_hibernate_aop.utils.Views.SEARCH_EMPLOYEES_NAME;
 
 @Controller
 public abstract class MyController {
+    @Autowired
+    protected PasswordEncoder passwordEncoder;
 
     @Autowired
     protected EmployeeService employeeService;
@@ -67,15 +74,27 @@ public abstract class MyController {
     protected final List<String> allowedTypes = Arrays.asList(
             "image/png", "image/jpeg", "image/jpg", "image/webp");
 
+    protected static final String MAIN_VIEW = "skeleton-view";
 
     @ModelAttribute
     protected void addGlobalAttributes(
             Model model,
             @RequestParam(value = "searchParams", required = false) String search,
             @RequestParam(value = "page", defaultValue = "0") Integer page,
-            @RequestParam(value = "size", defaultValue = DEFAULT_PAGE_SIZE) Integer size
+            @RequestParam(value = "size", defaultValue = DEFAULT_PAGE_SIZE) Integer size,
+            HttpServletRequest request
     ) {
         Pageable pageable = PageRequest.of(page, size);
+        String username = (String) request.getAttribute("user");
+
+        Optional<User> user = this.generalInfoService
+                .findCurrentEntity(username, "User", "username", User.class);
+
+        if (user.isPresent()) {
+            User currentUser = user.get();
+            model.addAttribute("mode", currentUser.getThemeMode());
+            model.addAttribute("authorizedUser", currentUser);
+        }
 
         SetDefaultParameters.setSearch(SEARCH_EMPLOYEES_NAME, model, search);
         model.addAttribute("pageable", pageable);

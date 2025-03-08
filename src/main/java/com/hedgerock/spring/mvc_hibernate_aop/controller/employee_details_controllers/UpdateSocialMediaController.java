@@ -8,6 +8,7 @@ import com.hedgerock.spring.mvc_hibernate_aop.utils.default_parameters.SetDefaul
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -19,7 +20,12 @@ import static com.hedgerock.spring.mvc_hibernate_aop.utils.default_parameters.Se
 
 @Controller
 public class UpdateSocialMediaController extends MyController {
-
+    @ModelAttribute
+    private void addGlobalAttr(
+            Model model
+    ) {
+        model.addAttribute("pagePath", "updateSocialMedia");
+    }
 
     @GetMapping("/updateSocialMedia")
     public String updateSocialMedia(
@@ -53,7 +59,7 @@ public class UpdateSocialMediaController extends MyController {
         model.addAttribute("employee", employee);
         model.addAttribute("socialMedia", socialMedia);
 
-        return "employee_details/update-social-media-view";
+        return MAIN_VIEW;
     }
 
 }

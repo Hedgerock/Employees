@@ -26,6 +26,9 @@ public class User {
     @Column(name="creation_date")
     private LocalDate creationDate;
 
+    @Column(name="theme_mode")
+    private Boolean themeMode;
+
     public User() {
     }
 
@@ -74,6 +77,14 @@ public class User {
 
     public LocalDate getCreationDate() {
         return creationDate;
+    }
+
+    public Boolean getThemeMode() {
+        return themeMode;
+    }
+
+    public void setThemeMode(Boolean themeMode) {
+        this.themeMode = themeMode;
     }
 
     public void setCreationDate(LocalDate creationDate) {

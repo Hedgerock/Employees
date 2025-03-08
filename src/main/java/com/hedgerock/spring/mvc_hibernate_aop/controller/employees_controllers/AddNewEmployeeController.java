@@ -20,7 +20,7 @@ import static com.hedgerock.spring.mvc_hibernate_aop.utils.Views.*;
 import static com.hedgerock.spring.mvc_hibernate_aop.utils.default_parameters.SetDefaultParameters.*;
 
 @Controller
-public class AddNewEmployeeController extends MyController {
+public class AddNewEmployeeController extends HeadUpdateInfoController {
 
     @GetMapping("/addNewEmployee")
     public String addNewEmployee(
@@ -74,6 +74,6 @@ public class AddNewEmployeeController extends MyController {
                 title
         );
 
-        return CURRENT_EMPLOYEE_DETAILS_VIEW;
+        return MAIN_VIEW;
     }
 }

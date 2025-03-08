@@ -1,6 +1,6 @@
 package com.hedgerock.spring.mvc_hibernate_aop.controller.current_place_controllers;
 
-import com.hedgerock.spring.mvc_hibernate_aop.controller.MyController;
+import com.hedgerock.spring.mvc_hibernate_aop.controller.current_place_controllers.head_controllers.HeadUpdateCurrentPlaceController;
 import com.hedgerock.spring.mvc_hibernate_aop.entity.Employee;
 import com.hedgerock.spring.mvc_hibernate_aop.entity.places.City;
 import com.hedgerock.spring.mvc_hibernate_aop.entity.places.Department;
@@ -20,14 +20,14 @@ import static com.hedgerock.spring.mvc_hibernate_aop.utils.default_parameters.Se
 
 @Controller
 @RequestMapping("/")
-public class AddNewCurrentPlaceController extends MyController {
+public class AddNewCurrentPlaceController extends HeadUpdateCurrentPlaceController {
 
     @GetMapping("addNewCity")
     public String addCity(
             Model model
     ) {
         initAddControllerAttributes(model, City.class, "city", "cityId");
-        return "current_place/current-place-info";
+        return MAIN_VIEW;
     }
 
     @GetMapping("addNewDepartment")
@@ -35,7 +35,7 @@ public class AddNewCurrentPlaceController extends MyController {
             Model model
     ) {
         initAddControllerAttributes(model, Department.class, "department", "depId");
-        return "current_place/current-place-info";
+        return MAIN_VIEW;
     }
 
     @GetMapping("addNewNationality")
@@ -43,39 +43,7 @@ public class AddNewCurrentPlaceController extends MyController {
             Model model
     ) {
         initAddControllerAttributes(model, Nationality.class, "nationality", "nationalityId");
-        return "current_place/current-place-info";
-    }
-
-    private <T> void initAddControllerAttributes(
-            Model model,
-            Class<T> tClass,
-            String entityName,
-            String idName
-    ) {
-        List<Employee> employees = this.employeeService.getSpecificEmployees(idName);
-        String capitalEntityName = capitalizeIt(entityName);
-
-        String action = "saveCurrent" + capitalEntityName;
-        String title = "New " + entityName + ": creation page";
-
-        model.addAttribute("allEmployees", employees);
-        model.addAttribute("idCollector", new IdCollector());
-
-        try {
-            T currentPlace = tClass.getDeclaredConstructor().newInstance();
-
-            Long currentPlaceId = SetDefaultParameters.invokeMethod(currentPlace, "getId", Long.class);
-
-            UpdateCurrentPlaceAttributes<T> updateAttributes = initUpdateAttributes(
-                    currentPlace, action, currentPlaceId, entityName
-            );
-
-            model.addAttribute("updateAttributes", updateAttributes);
-            model.addAttribute(entityName, currentPlace);
-            model.addAttribute("title", title);
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
+        return MAIN_VIEW;
     }
 
 }

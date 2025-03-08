@@ -8,34 +8,21 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     </head>
     <body>
-        <div class="skeleton">
-            <header>
-                <jsp:include page = "../header-navbar-view.jsp">
-                    <jsp:param name = "page" value = "${ showPlacesAttributes.pageName }"/>
-                </jsp:include>
-                <jsp:include page = "../util_views/search-setup-view.jsp" />
-                <jsp:include page = "../util_views/header-authorized-user-view.jsp" />
-            </header>
+        <jsp:include page="../util_views/options-view.jsp">
+            <jsp:param name="addHref" value="${ showPlacesAttributes.addHref }" />
+            <jsp:param name="textContent" value="${ showPlacesAttributes.buttonContent }" />
+        </jsp:include>
 
-            <main>
-                <jsp:include page="../util_views/options-view.jsp">
-                    <jsp:param name="addHref" value="${ showPlacesAttributes.addHref }" />
-                    <jsp:param name="textContent" value="${ showPlacesAttributes.buttonContent }" />
-                </jsp:include>
-                
-                <jsp:include page="current-places-content-table-view.jsp" />
+        <jsp:include page="current-places-content-table-view.jsp" />
+            
+        <c:set var="curParam" value="2" scope="request" />
+        <c:set var="placeTitle" value="${ placeTitle }" scope="request" />
+        <c:set var="isMoreThanZero" value="${ currentPage - curParam > 0 }" scope="request"/>
+        <c:set var="actualTotal" value="${ total - 1 }" scope="request"/>
+        <c:set var="isLessThanMax" value="${ currentPage + curParam < actualTotal }" scope="request"/>
 
-                <c:set var="curParam" value="2" scope="request" />
-                <c:set var="placeTitle" value="${ placeTitle }" scope="request" />
-                <c:set var="isMoreThanZero" value="${ currentPage - curParam > 0 }" scope="request"/>
-                <c:set var="actualTotal" value="${ total - 1 }" scope="request"/>
-                <c:set var="isLessThanMax" value="${ currentPage + curParam < actualTotal }" scope="request"/>
-
-                <c:if test="${ actualTotal > 0 }">
-                    <jsp:include page="../util_views/pagination/pagination-view.jsp"/>
-                </c:if>
-            </main>
-            <jsp:include page = "../footer-view.jsp" />
-        </div>
+        <c:if test="${ actualTotal > 0 }">
+            <jsp:include page="../util_views/pagination/pagination-view.jsp"/>
+        </c:if>
     </body>
 </html>

@@ -11,7 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import static com.hedgerock.spring.mvc_hibernate_aop.utils.default_parameters.SetDefaultParametersProfile.initUserHandler;
 
 @Controller
-public class ActivateDeactivateUserController extends MyController {
+public class ActivateDeactivateUserController extends HeadProfileController {
 
     @RequestMapping("/deactivateUser")
     public String deactivateUser(
@@ -19,7 +19,7 @@ public class ActivateDeactivateUserController extends MyController {
             Model model,
             RedirectAttributes redirectAttributes
     ) {
-       return initUserHandler(redirectAttributes, username, false, this.generalInfoService);
+       return initUserHandler(model, redirectAttributes, username, false, this.generalInfoService);
     }
 
     @RequestMapping("/activateUser")
@@ -28,7 +28,7 @@ public class ActivateDeactivateUserController extends MyController {
             Model model,
             RedirectAttributes redirectAttributes
     ) {
-        return initUserHandler(redirectAttributes, username, true, this.generalInfoService);
+        return initUserHandler(model, redirectAttributes, username, true, this.generalInfoService);
     }
 
 }

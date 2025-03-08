@@ -17,11 +17,10 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.hedgerock.spring.mvc_hibernate_aop.utils.Redirects.REDIRECT_TO_NOT_FOUND_PAGE;
-import static com.hedgerock.spring.mvc_hibernate_aop.utils.Views.CURRENT_EMPLOYEE_DETAILS_VIEW;
 import static com.hedgerock.spring.mvc_hibernate_aop.utils.default_parameters.SetDefaultParameters.getCurrentValue;
 
 @Controller
-public class UpdateInfoController extends MyController {
+public class UpdateInfoController extends HeadUpdateInfoController {
 
     @GetMapping("/updateInfo")
     public String updateEmployee(
@@ -64,7 +63,7 @@ public class UpdateInfoController extends MyController {
         employeeDetails.ifPresent(det -> model.addAttribute("employeeDetails", det));
         model.addAttribute("action", "saveCurrentEmployee/" + employee.getId());
 
-        return CURRENT_EMPLOYEE_DETAILS_VIEW;
+        return MAIN_VIEW;
     }
 
     private String getDepartmentName(Employee employee) {

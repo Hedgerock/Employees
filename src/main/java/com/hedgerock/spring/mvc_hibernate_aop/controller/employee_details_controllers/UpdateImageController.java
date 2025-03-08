@@ -7,6 +7,7 @@ import com.hedgerock.spring.mvc_hibernate_aop.utils.default_parameters.SetDefaul
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -16,6 +17,13 @@ import static com.hedgerock.spring.mvc_hibernate_aop.utils.default_parameters.Se
 
 @Controller
 public class UpdateImageController extends MyController {
+
+    @ModelAttribute
+    private void addGlobalAttr(
+            Model model
+    ) {
+        model.addAttribute("pagePath", "updateImage");
+    }
 
     @GetMapping("/update")
     public String updateImage(
@@ -36,7 +44,7 @@ public class UpdateImageController extends MyController {
         model.addAttribute("employee", employee);
         SetDefaultParameters.setSearch(SEARCH_EMPLOYEES_NAME, model, search);
 
-        return "employee_details/update-image-view";
+        return MAIN_VIEW;
     }
 
 }

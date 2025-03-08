@@ -34,8 +34,6 @@ public class SaveDescriptionController extends MyController {
             EmployeeDetails employeeDetails = employee.getEmployeeDetails();
             EmployeeDescription employeeDescription = employeeDetails.getEmployeeDescription();
 
-            System.out.println(textContent);
-
             employeeDescription.setValue(textContent);
 
             this.generalInfoService.saveCurrentEntity(employeeDescription);

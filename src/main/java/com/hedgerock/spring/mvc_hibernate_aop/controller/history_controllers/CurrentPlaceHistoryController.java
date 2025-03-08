@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -20,6 +21,13 @@ import static com.hedgerock.spring.mvc_hibernate_aop.utils.default_parameters.Se
 
 @Controller
 public class CurrentPlaceHistoryController extends MyController {
+
+    @ModelAttribute
+    private void globalAttr(
+            Model model
+    ) {
+        model.addAttribute("pagePath", "historyCurrentPlace");
+    }
 
     @GetMapping("/showDepartmentHistory")
     public String showDepartmentHistory(

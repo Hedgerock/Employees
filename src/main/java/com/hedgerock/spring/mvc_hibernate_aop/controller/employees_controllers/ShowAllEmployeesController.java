@@ -9,16 +9,23 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import static com.hedgerock.spring.mvc_hibernate_aop.utils.Attributes.*;
-import static com.hedgerock.spring.mvc_hibernate_aop.utils.Views.ALL_EMPLOYEES_VIEW;
 import static com.hedgerock.spring.mvc_hibernate_aop.utils.default_parameters.SetDefaultParameters.*;
 
 @Controller
 @RequestMapping("/")
 public class ShowAllEmployeesController extends MyController {
+
+    @ModelAttribute
+    private void initAttr(
+            Model model
+    ) {
+        model.addAttribute("pagePath", "employees");
+    }
 
     @GetMapping
     public String showAllEmployees(
@@ -31,7 +38,7 @@ public class ShowAllEmployeesController extends MyController {
         final GeneralInfo generalInfo = this.generalInfoService.getGeneralInfo();
         model.addAttribute("generalInfo", generalInfo);
 
-        return ALL_EMPLOYEES_VIEW;
+        return MAIN_VIEW;
     }
 
     @GetMapping("firedEmployees")
@@ -42,7 +49,7 @@ public class ShowAllEmployeesController extends MyController {
         final String result = initAllEmployees(model, "/firedEmployees", redirectAttributes, true);
 
         model.addAttribute("altAction", "/firedEmployees");
-        return result.equals(OK) ? ALL_EMPLOYEES_VIEW : result;
+        return result.equals(OK) ? MAIN_VIEW : result;
     }
 
     private String initAllEmployees(

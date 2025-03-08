@@ -10,6 +10,7 @@ import com.hedgerock.spring.mvc_hibernate_aop.utils.default_parameters.SetDefaul
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -24,6 +25,13 @@ import static com.hedgerock.spring.mvc_hibernate_aop.utils.Views.SEARCH_EMPLOYEE
 @Controller
 public class ShowCurrentEmployeeDetailsView extends MyController {
     private static final String ENTITY_NAME = "Employee";
+
+    @ModelAttribute
+    private void initGlobalAttr(
+            Model model
+    ) {
+        model.addAttribute("pagePath", "showCurrentEmployeeDetails");
+    }
 
     @GetMapping("/showCurrentEmployeeDetails")
     public String showCurrentDetails(
@@ -63,7 +71,7 @@ public class ShowCurrentEmployeeDetailsView extends MyController {
         addAttributes(model, currentEmployee, depId, cityId, natId, this.servletContext);
         SetDefaultParameters.setSearch(SEARCH_EMPLOYEES_NAME, model, search);
 
-        return "employee_details/show-current-employee-details-view";
+        return MAIN_VIEW;
     }
 
     @GetMapping("/showFiredEmployeeDetails")
@@ -92,6 +100,6 @@ public class ShowCurrentEmployeeDetailsView extends MyController {
         model.addAttribute("timeCarrier", timeCarrier);
         model.addAttribute("isFired", true);
 
-        return "employee_details/show-current-employee-details-view";
+        return MAIN_VIEW;
     }
 }

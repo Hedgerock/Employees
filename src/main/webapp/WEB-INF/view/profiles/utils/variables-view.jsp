@@ -2,7 +2,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <body>
-    <c:set var="pageName" value="${ not empty contentPage ? contentPage : 'main' }" />
     <c:set var="actualContent" value="profile-${ pageName }-page-view.jsp" />
     <!--Mod - modificator-->
     <c:set var="isMainPage" value="${ pageName == 'main'}" />
@@ -12,8 +11,6 @@
     <c:set var="mainPageMod" value="${ isMainPage ? 'profile-menu__item_active' : '' }" />
     <c:set var="adminPageMod" value="${ isAdminPage ? 'profile-menu__item_active' : '' }" />
     <c:set var="settingsPageMod" value="${ isSettingsPage ? 'profile-menu__item_active' : '' }" />
-
-    <c:set var="pageTitle" value="${ user } profile: ${ pageName } page" />
 
     <c:url var="mainLink" value="/profile" />
     <c:url var="adminLink" value="/admins" />

@@ -7,12 +7,20 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import static com.hedgerock.spring.mvc_hibernate_aop.utils.default_parameters.SetDefaultParameters.initPageable;
 
 @Controller
 public class CurrentPlacesHistoryLists extends MyController {
     private static final String TEMPLATE_OF_CURRENT_PLACE_HISTORY_REF = "show%sHistory";
+
+    @ModelAttribute
+    private void globalAttr(
+            Model model
+    ) {
+        model.addAttribute("pagePath", "currentPlaceList");
+    }
 
     @GetMapping("/departmentHistory")
     public String getDepartmentsList(
@@ -47,6 +55,6 @@ public class CurrentPlacesHistoryLists extends MyController {
         model.addAttribute("title", "History of " + entityName + " page");
         model.addAttribute("idTitle", idTitle);
 
-        return "history/history-current-place-list-view";
+        return MAIN_VIEW;
     }
 }

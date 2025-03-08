@@ -1,8 +1,9 @@
 package com.hedgerock.spring.mvc_hibernate_aop.controller.profile_controllers;
 
-import com.hedgerock.spring.mvc_hibernate_aop.controller.MyController;
 import com.hedgerock.spring.mvc_hibernate_aop.entity.User;
 import com.hedgerock.spring.mvc_hibernate_aop.utils.default_parameters.SetDefaultParameters;
+import com.hedgerock.spring.mvc_hibernate_aop.utils.dto.user_dtos.ChangePasswordDTO;
+import com.hedgerock.spring.mvc_hibernate_aop.utils.dto.user_dtos.UserDetailsDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -13,8 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import static com.hedgerock.spring.mvc_hibernate_aop.utils.Attributes.OK;
 
 @Controller
-public class ProfileController extends MyController {
-    private static final String VIEW_PAGE = "profiles/my-profile-view";
+public class ProfileController extends HeadProfileController {
     private static final String ATTR_TITLE = "contentPage";
 
 
@@ -23,7 +23,7 @@ public class ProfileController extends MyController {
             RedirectAttributes redirectAttributes,
             Model model
     ) {
-        return VIEW_PAGE;
+        return MAIN_VIEW;
     }
 
     @GetMapping("/admins")
@@ -42,15 +42,18 @@ public class ProfileController extends MyController {
 
         model.addAttribute("users", users.getContent());
 
-        return result.equals(OK) ? VIEW_PAGE : result;
+        return result.equals(OK) ? MAIN_VIEW : result;
     }
 
     @GetMapping("/settings")
     public String settings(
-            Model model
+            Model model,
+            RedirectAttributes redirectAttributes
     ) {
+        model.addAttribute("passwords", new ChangePasswordDTO());
+        model.addAttribute("userDetails", new UserDetailsDTO());
         model.addAttribute(ATTR_TITLE, "settings");
-        return VIEW_PAGE;
+        return MAIN_VIEW;
     }
 
 }

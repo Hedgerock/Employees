@@ -1,4 +1,4 @@
-package com.hedgerock.spring.mvc_hibernate_aop.utils.dto;
+package com.hedgerock.spring.mvc_hibernate_aop.utils.dto.user_dtos;
 
 import com.hedgerock.spring.mvc_hibernate_aop.utils.validation.FieldMatch;
 import jakarta.validation.constraints.NotEmpty;
@@ -20,10 +20,12 @@ public class AddUserDTO {
     private String authority;
     private LocalDate creationDate;
     private final Boolean enabled;
+    private final Boolean themeMode;
 
 
     public AddUserDTO() {
         this.enabled = true;
+        this.themeMode = false;
     }
 
     public String getUsername() {
@@ -60,6 +62,10 @@ public class AddUserDTO {
 
     public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public Boolean getThemeMode() {
+        return themeMode;
     }
 
     public LocalDate getCreationDate() {

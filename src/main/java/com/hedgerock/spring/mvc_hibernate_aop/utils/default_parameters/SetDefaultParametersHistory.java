@@ -40,7 +40,7 @@ public class SetDefaultParametersHistory extends SetDefaultParameters {
 
         model.addAttribute("idTitle", idTitle);
 
-        return "history/history-current-place-view";
+        return "skeleton-view";
     }
 
     public static void initShowPlaces(

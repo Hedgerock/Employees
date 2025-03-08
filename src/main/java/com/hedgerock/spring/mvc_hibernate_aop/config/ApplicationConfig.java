@@ -90,6 +90,7 @@ public class ApplicationConfig implements WebMvcConfigurer {
         resourceHandlerRegistry.addResourceHandler("/js/**").addResourceLocations("/js/");
         resourceHandlerRegistry.addResourceHandler("/assets/**").addResourceLocations("/assets/");
         resourceHandlerRegistry.addResourceHandler("/tmp/**").addResourceLocations("/tmp/");
+        resourceHandlerRegistry.addResourceHandler("/favicon.ico").addResourceLocations("/assets/favicon/");
     }
 
     @Override

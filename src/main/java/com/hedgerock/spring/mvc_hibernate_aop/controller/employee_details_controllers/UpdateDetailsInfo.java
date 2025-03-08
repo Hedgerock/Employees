@@ -7,6 +7,7 @@ import com.hedgerock.spring.mvc_hibernate_aop.utils.default_parameters.SetDefaul
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -18,6 +19,13 @@ import static com.hedgerock.spring.mvc_hibernate_aop.utils.default_parameters.Se
 
 @Controller
 public class UpdateDetailsInfo extends MyController {
+
+    @ModelAttribute
+    private void initGlobalAttr(
+            Model model
+    ) {
+        model.addAttribute("pagePath", "updateDetails");
+    }
 
     @GetMapping("/updateDetailsInfo")
     public String updateDetailsInfo(
@@ -46,7 +54,7 @@ public class UpdateDetailsInfo extends MyController {
                 details.getEmployee().getFirstName(), details.getEmployee().getLastName())
         );
 
-        return "employee_details/update-details-info-view";
+        return MAIN_VIEW;
     }
 
 }

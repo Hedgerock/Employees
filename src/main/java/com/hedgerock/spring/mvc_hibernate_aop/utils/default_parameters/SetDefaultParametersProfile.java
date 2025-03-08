@@ -3,11 +3,10 @@ package com.hedgerock.spring.mvc_hibernate_aop.utils.default_parameters;
 import com.hedgerock.spring.mvc_hibernate_aop.entity.Authority;
 import com.hedgerock.spring.mvc_hibernate_aop.entity.User;
 import com.hedgerock.spring.mvc_hibernate_aop.service.general_info_service.GeneralInfoService;
-import com.hedgerock.spring.mvc_hibernate_aop.utils.dto.AddUserDTO;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import com.hedgerock.spring.mvc_hibernate_aop.utils.dto.user_dtos.AddUserDTO;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.ui.Model;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
@@ -21,10 +20,12 @@ public class SetDefaultParametersProfile extends SetDefaultParameters {
         String password = passwordEncoder.encode(userDTO.getPassword());
         String authority = userDTO.getAuthority();
         Boolean enabled = userDTO.getEnabled();
+        Boolean themeMode = userDTO.getThemeMode();
 
         user.setUsername(userName);
         user.setPassword(password);
         user.setEnabled(enabled);
+        user.setThemeMode(themeMode);
         user.setCreationDate(LocalDate.now());
 
         Authority curAuthority = new Authority();
@@ -37,20 +38,25 @@ public class SetDefaultParametersProfile extends SetDefaultParameters {
     }
 
     public static String initUserHandler(
+            Model model,
             RedirectAttributes redirectAttributes,
             String username,
             boolean activation,
             GeneralInfoService generalInfoService
     ) {
-        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        final UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        final User authorizedUser = (User) model.getAttribute("authorizedUser");
+        String redirect = "redirect:/admins";
+
+        if (authorizedUser == null) {
+            SetDefaultParameters.initNotFoundFlashAttr(redirectAttributes, "User details");
+            return redirect;
+        }
 
         String operation = activation ? "activate" : "deactivate";
         String operationExt = operation + "d";
         String entityName = "User";
-        String redirect = "redirect:/admins";
 
-        if (userDetails.getUsername().equals(username)) {
+        if (authorizedUser.getUsername().equals(username)) {
             SetDefaultParameters.initFailedFlashAttr(redirectAttributes, entityName, operation,
                     new RuntimeException("You can't deactivate yourself"));
 
