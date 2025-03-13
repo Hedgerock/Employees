@@ -7,8 +7,9 @@ import com.hedgerock.spring.mvc_hibernate_aop.utils.dto.id_collectors.IdFinder;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "employee_details")
@@ -23,7 +24,7 @@ public class EmployeeDetails {
 
     @OneToOne(
             mappedBy = "employeeDetails",
-            fetch = FetchType.EAGER
+            fetch = FetchType.LAZY
     )
     private Employee employee;
 
@@ -31,27 +32,27 @@ public class EmployeeDetails {
             mappedBy = "employeeDetails",
             cascade = CascadeType.ALL,
             orphanRemoval = true,
-            fetch = FetchType.EAGER
+            fetch = FetchType.LAZY
     )
-    private List<Email> emails;
+    private Set<Email> emails;
 
     @OneToMany(
             mappedBy = "employeeDetails",
             cascade = CascadeType.ALL,
             orphanRemoval = true,
-            fetch = FetchType.EAGER
+            fetch = FetchType.LAZY
     )
-    private List<PhoneNumber> phoneNumbers;
+    private Set<PhoneNumber> phoneNumbers;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name="picture_id")
     private Picture picture;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name="social_media_id")
     private SocialMedia socialMedia;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name="employee_description_id")
     private EmployeeDescription employeeDescription;
 
@@ -92,9 +93,9 @@ public class EmployeeDetails {
         this.employeeDescription = new EmployeeDescription();
     }
 
-    public void addEmails(List<Email> emails) {
+    public void addEmails(Set<Email> emails) {
         if (this.emails == null) {
-            this.emails = new ArrayList<>();
+            this.emails = new HashSet<>();
         }
 
        this.emails.clear();
@@ -104,9 +105,9 @@ public class EmployeeDetails {
        });
     }
 
-    public void addPhoneNumbers(List<PhoneNumber> phoneNumbers) {
+    public void addPhoneNumbers(Set<PhoneNumber> phoneNumbers) {
         if (this.phoneNumbers == null) {
-            this.phoneNumbers = new ArrayList<>();
+            this.phoneNumbers = new HashSet<>();
         }
 
         phoneNumbers.forEach(phoneNumber -> {
@@ -199,7 +200,7 @@ public class EmployeeDetails {
         this.picture = picture;
     }
 
-    public List<Email> getEmails() {
+    public Set<Email> getEmails() {
         return emails;
     }
 
@@ -219,15 +220,15 @@ public class EmployeeDetails {
         this.socialMediaId = socialMediaId;
     }
 
-    public void setEmails(List<Email> emails) {
+    public void setEmails(Set<Email> emails) {
         this.emails = emails;
     }
 
-    public List<PhoneNumber> getPhoneNumbers() {
+    public Set<PhoneNumber> getPhoneNumbers() {
         return phoneNumbers;
     }
 
-    public void setPhoneNumbers(List<PhoneNumber> phoneNumbers) {
+    public void setPhoneNumbers(Set<PhoneNumber> phoneNumbers) {
         this.phoneNumbers = phoneNumbers;
     }
 

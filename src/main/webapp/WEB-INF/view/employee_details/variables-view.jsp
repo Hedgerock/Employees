@@ -25,9 +25,5 @@
     <c:url var="terminate" value="/terminateEmployeeData">
         <c:param name="empId" value="${ employee.id }" />
     </c:url>
-
-    <c:set 
-        var="pageTitle" 
-        value="${ isFired ? 'Fired' : '' } ${ employee.department.name }: ${ employee.firstName } ${ employee.lastName } details" />
 </body>
 </html>

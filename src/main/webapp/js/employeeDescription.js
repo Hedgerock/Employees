@@ -1,5 +1,6 @@
 const employeeDescription = document.querySelector(".employee-details-list__item_description");
 const content = employeeDescription.querySelector("span");
+const height = employeeDescription.clientHeight;
 
 
 employeeDescription.onclick = initTextArea;
@@ -19,8 +20,9 @@ function initTextArea() {
     textArea.className = "employee-details-list__item employee-details-list__item_textarea";
     textArea.name = "employeeDescriptionAttribute";
     textArea.id = "employeeDescriptionAttribute";
+    textArea.style.height = height + 10 + "px";
 
-    const currentContent = content.textContent;
+    const currentContent = content.textContent + " ";
 
     if (currentContent !== "Empty description") {
         textArea.value = currentContent;

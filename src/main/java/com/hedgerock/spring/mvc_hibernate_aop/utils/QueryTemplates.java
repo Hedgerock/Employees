@@ -38,5 +38,15 @@ public class QueryTemplates {
 
     public static final int CURRENT_INDEX_FOR_SALARY = 4;
 
+    public static final String JOINS = "LEFT JOIN FETCH e.department " +
+            "LEFT JOIN FETCH e.nationality " +
+            "LEFT JOIN FETCH e.city " +
+            "LEFT JOIN FETCH e.employeeDetails ed " +
+            "LEFT JOIN FETCH ed.emails " +
+            "LEFT JOIN FETCH ed.phoneNumbers " +
+            "LEFT JOIN FETCH ed.socialMedia " +
+            "LEFT JOIN FETCH ed.picture " +
+            "LEFT JOIN FETCH ed.employeeDescription ";
+
     private QueryTemplates() {}
 }

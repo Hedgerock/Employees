@@ -13,13 +13,14 @@ public interface GeneralInfoDAO {
     <T> void deleteCurrentEntity(T entity, String tableFieldName, List<Long>ids, Class<T>tClass);
     <T> T saveCurrentEntity(T entity);
     <T> Page<T> getCurrentEntitiesList(Class<T> tClass, String entityName, Pageable pageable);
+
     <T> List<T> getCurrentEntitiesList(Class<T> tClass, String entityName);
+    <T> List<T> getCurrentEntitiesList(Class<T> tClass, String entityName, String fieldName, Long id);
+
     <T> Optional<T> findCurrentEntity(Long id, String entityName, Class<T> tClass);
     <T> Optional<T> findCurrentEntity(String name, String entityName, String fieldName, Class<T>tClass);
 
     <T> Optional<T> findFiredEmployee(Long id, Class<T> tClass);
-
-    <T> void updateEntityStatistic(T entity, Long id, String queryName);
 
     <T> List<T> findEntityWithSiblings(Long id, String entityName, Class<T>tClass);
     <T> List<T> findEntityWithSiblings(Long id, Class<T> tClass);

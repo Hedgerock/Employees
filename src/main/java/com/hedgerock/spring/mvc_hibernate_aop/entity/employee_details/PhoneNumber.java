@@ -18,7 +18,7 @@ public class PhoneNumber {
     @Column(name = "employee_details_id", insertable = false, updatable = false)
     private Long employeeDetailsId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_details_id")
     EmployeeDetails employeeDetails;
 

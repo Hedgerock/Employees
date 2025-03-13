@@ -55,6 +55,7 @@
                     />
                     <jsp:param name = "path" value = "selectionCollector.departmentName" />
                     <jsp:param name = "option" value = "selection-option" />
+                    <jsp:param name = "selectionType" value = "department" />
                 </jsp:include>
             </c:when>
             <c:otherwise>
@@ -64,24 +65,16 @@
 
         <c:choose>
             <c:when test = "${ not empty citiesCollection }">
-                <label class="current-employee-form-label">
-                    <h3
-                        class="current-employee-form-label__title"
-                    >
-                        Enter Employee city:
-                    </h3>
-        
-                    <form:select
-                        path = "selectionCollector.cityName"
-                        class = "current-employee-form-label__input current-employee-form-label__input_selection-option"
-                        type = "${ param.type }"
-                    >
-        
-                        <form:options items = "${ citiesCollection }" />
-        
-                    </form:select>
-        
-                </label>
+                <jsp:include page = "../form_views/select-input-view.jsp">
+                    <jsp:param name = "formTitle" value = "current-employee-form" />
+                    <jsp:param 
+                        name = "labelTitle" 
+                        value = "Enter ${ actualDepartmentTitle } Employee city" 
+                    />
+                    <jsp:param name = "path" value = "selectionCollector.cityName" />
+                    <jsp:param name = "option" value = "selection-option" />
+                    <jsp:param name = "selectionType" value = "city" />
+                </jsp:include>
             </c:when>
             <c:otherwise>
                 <form:hidden path = "selectionCollector.cityName" value = "${ cityName }"/>
@@ -89,25 +82,17 @@
         </c:choose>
 
         <c:choose>
-            <c:when test = "${ not empty citiesCollection }">
-                <label class="current-employee-form-label">
-                    <h3
-                        class="current-employee-form-label__title"
-                    >
-                        Enter Employee nationality:
-                    </h3>
-        
-                    <form:select
-                        path = "selectionCollector.nationalityName"
-                        class = "current-employee-form-label__input current-employee-form-label__input_selection-option"
-                        type = "${ param.type }"
-                    >
-        
-                        <form:options items = "${ nationalitiesCollection }" />
-        
-                    </form:select>
-        
-                </label>
+            <c:when test = "${ not empty nationalitiesCollection }">
+                <jsp:include page = "../form_views/select-input-view.jsp">
+                    <jsp:param name = "formTitle" value = "current-employee-form" />
+                    <jsp:param 
+                        name = "labelTitle" 
+                        value = "Enter ${ actualDepartmentTitle } Employee nationality" 
+                    />
+                    <jsp:param name = "path" value = "selectionCollector.nationalityName" />
+                    <jsp:param name = "option" value = "selection-option" />
+                    <jsp:param name = "selectionType" value = "nationality" />
+                </jsp:include>
             </c:when>
             <c:otherwise>
                 <form:hidden path = "selectionCollector.nationalityName" value = "${ nationalityName }"/>

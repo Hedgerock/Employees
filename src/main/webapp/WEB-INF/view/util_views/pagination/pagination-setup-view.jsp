@@ -9,7 +9,7 @@
     <c:set var="isLessThanMax" value="${ paginationCurrentPage + curParam < actualTotal }" scope="request"/>
 
     <c:if test="${ actualTotal > 0 }">
-        <jsp:include page="../util_views/pagination/pagination-view.jsp"/>
+        <jsp:include page="components/pagination-view.jsp"/>
     </c:if>
 </body>
 </html>

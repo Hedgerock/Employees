@@ -4,11 +4,11 @@
     <td class="content-table-row__value">
         <a
             class="content-table-row__link"
+            href="${ param.link }"
             target="${ param.target }"
-            href="${ param.link }" 
-            title = "Show details of ${ employee.firstName } ${ employee.lastName }"
+            title = "Show details of ${ content.firstName } ${ content.lastName }"
         >
-            ${ employee.firstName }
+            ${ content.lastName }
         </a>
     </td>
 </body>

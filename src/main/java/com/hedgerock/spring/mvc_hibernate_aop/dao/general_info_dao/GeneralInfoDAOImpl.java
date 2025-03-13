@@ -22,6 +22,20 @@ import static com.hedgerock.spring.mvc_hibernate_aop.utils.QueryTemplates.QUERY_
 
 @Repository
 public class GeneralInfoDAOImpl implements GeneralInfoDAO {
+    private static final String FULL_JOINS = "JOIN FETCH e.employeeDetails det " +
+            "LEFT JOIN FETCH det.employeeDescription " +
+            "LEFT JOIN FETCH det.emails " +
+            "LEFT JOIN FETCH det.phoneNumbers " +
+            "LEFT JOIN FETCH det.socialMedia sm " +
+            "LEFT JOIN FETCH sm.telegram " +
+            "LEFT JOIN FETCH sm.viber " +
+            "LEFT JOIN FETCH sm.whatsApp " +
+            "LEFT JOIN FETCH sm.linkedIn " +
+            "LEFT JOIN FETCH det.picture pct " +
+            "LEFT JOIN FETCH pct.pictures " +
+            "LEFT JOIN FETCH e.department " +
+            "LEFT JOIN FETCH e.city " +
+            "LEFT JOIN FETCH e.nationality ";
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -71,7 +85,7 @@ public class GeneralInfoDAOImpl implements GeneralInfoDAO {
             hql = String.format(QUERY_WITH_SIBLINGS, entityName) +
                     String.format(QUERY_WITHOUT_PLACE, entityName, entityName);
         } else {
-            hql = String.format(QUERY_WITH_SIBLINGS, entityName) +
+            hql = String.format("SELECT e FROM %s e ", entityName) + FULL_JOINS + "WHERE " +
                     String.format(QUERY_WITHOUT_PLACE_AND_NOT_FIRED, entityName, entityName);
         }
 
@@ -89,7 +103,7 @@ public class GeneralInfoDAOImpl implements GeneralInfoDAO {
 
         String entityName = "Employee";
 
-        String hql = String.format(QUERY_WITH_SIBLINGS, entityName) +
+        String hql = String.format("SELECT e FROM %s e ", entityName) + FULL_JOINS + "WHERE " +
                 String.format(QUERY_WITHOUT_PLACE_AND_FIRED, entityName, entityName);
 
         Query<T> query = session.createQuery(hql, tClass);
@@ -107,7 +121,7 @@ public class GeneralInfoDAOImpl implements GeneralInfoDAO {
         String hql;
 
         if (tClass == Employee.class) {
-            hql = String.format(QUERY_WITH_SIBLINGS, entityName) +
+            hql = String.format("SELECT e FROM %s e ", entityName) + FULL_JOINS + "WHERE " +
                     String.format(QUERY_WITH_PLACE, tableFieldName) +
                     " AND " +
                     String.format(QUERY_WITH_PLACE_AND_ID_AND_NOT_FIRED, entityName, tableFieldName, entityName, tableFieldName);
@@ -169,6 +183,17 @@ public class GeneralInfoDAOImpl implements GeneralInfoDAO {
     }
 
     @Override
+    public <T> List<T> getCurrentEntitiesList(Class<T> tClass, String entityName, String fieldName, Long id) {
+        final Session session = this.sessionFactory.getCurrentSession();
+        String hql = String.format("FROM %s WHERE %s = :id", entityName, fieldName);
+        Query<T> query = session.createQuery(hql, tClass);
+
+        query.setParameter("id", id);
+
+        return query.getResultList();
+    }
+
+    @Override
     public <T> Optional<T> findCurrentEntity(Long id, String entityName, Class<T> tClass) {
         final Session session = this.sessionFactory.getCurrentSession();
 
@@ -178,7 +203,7 @@ public class GeneralInfoDAOImpl implements GeneralInfoDAO {
         String hql;
 
         if (tClass == Employee.class) {
-            hql = String.format("FROM %s WHERE id = :id AND fireDate IS NULL", entityName);
+            hql = String.format("SELECT e FROM %s e " + FULL_JOINS + "WHERE e.id = :id AND e.fireDate IS NULL", entityName);
         } else {
             hql = String.format("SELECT " + entityAbbr + " FROM %s " + entityAbbr +
                     " LEFT JOIN FETCH " + prefix + "employee" +
@@ -214,13 +239,6 @@ public class GeneralInfoDAOImpl implements GeneralInfoDAO {
         employeeQuery.setParameter("id", id);
 
         return Optional.ofNullable(employeeQuery.uniqueResult());
-    }
-
-    @Override
-    public <T> void updateEntityStatistic(T entity, Long id, String queryName) {
-        final Session session = this.sessionFactory.getCurrentSession();
-
-        updateStatistics(session, id, queryName, entity);
     }
 
     @Override

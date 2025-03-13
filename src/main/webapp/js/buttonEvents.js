@@ -4,7 +4,7 @@ import { field, layout } from "./initializing.js";
 import { burgerContainer } from "./initializing.js";
 
 
-export const burgerButtonClickHandler = () => {
+export function burgerButtonClickHandler() {
     if (document.querySelector(".burger-menu")) {
         layout.remove();
         burgerContainer.remove();
@@ -14,7 +14,7 @@ export const burgerButtonClickHandler = () => {
     }
 }
 
-export const closeButtonClickHandler = () => {
+export function closeButtonClickHandler() {
     layout.remove();
     burgerContainer.remove();
 }

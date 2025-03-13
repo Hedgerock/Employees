@@ -1,9 +1,6 @@
 package com.hedgerock.spring.mvc_hibernate_aop.dao.employee_dao;
 
 import com.hedgerock.spring.mvc_hibernate_aop.entity.Employee;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -27,25 +24,41 @@ public class EmployeeDaoImpl implements EmployeeDAO {
     public Page<Employee> getAllEmployees(Pageable pageable) {
         final Session session = this.sessionFactory.getCurrentSession();
 
-        String entityName = getEntityName(TEMPLATE_OF_GET_ALL_REQUEST + " WHERE fireDate is NULL", "Employee");
-
-        Query<Employee> query = initQuery(
-                Employee.class, session, entityName);
-
-        return initPage(session, pageable, query, entityName);
-    }
-
-    @Override
-    public Page<Employee> getAllEmployees(Pageable pageable, boolean isLookingForFired) {
-        final Session session = this.sessionFactory.getCurrentSession();
-        String entityName = getEntityName(TEMPLATE_OF_GET_ALL_REQUEST + " WHERE fireDate IS NOT NULL " +
-                        "ORDER BY fireDate DESC",
+        String entityName = getEntityName("SELECT e FROM Employee e " +
+                        JOINS + "WHERE e.fireDate IS NULL " + "ORDER BY e.fireDate DESC",
                 "Employee");
 
         Query<Employee> query = initQuery(
                 Employee.class, session, entityName);
 
-        return initPage(session, pageable, query, entityName);
+
+        String counterQuery = "SELECT COUNT(e.id) FROM Employee e " +
+                "WHERE e.fireDate IS NULL";
+
+
+        return initPage(session, pageable, query, counterQuery);
+    }
+
+    @Override
+    public Page<Employee> getAllEmployees(Pageable pageable, boolean isLookingForFired) {
+        final Session session = this.sessionFactory.getCurrentSession();
+        String entityName = getEntityName("SELECT e FROM Employee e " +
+                        " JOIN FETCH e.department " +
+                        " JOIN FETCH e.nationality " +
+                        " JOIN FETCH e.city " +
+                        " JOIN FETCH e.employeeDetails " +
+                        " WHERE e.fireDate IS NOT NULL " +
+                        "ORDER BY e.fireDate DESC",
+                "Employee");
+
+        Query<Employee> query = initQuery(
+                Employee.class, session, entityName);
+
+        String counterQuery = "SELECT COUNT(e.id) FROM Employee e " +
+                "WHERE e.fireDate IS NOT NULL";
+
+
+        return initPage(session, pageable, query, counterQuery);
     }
 
     @Override
@@ -77,7 +90,7 @@ public class EmployeeDaoImpl implements EmployeeDAO {
     public Page<Employee> getSearchedEmployees(String search, Pageable pageable) {
         final Session session = this.sessionFactory.getCurrentSession();
 
-       String query = getSearchParams(search) + " AND fireDate IS NULL";
+       String query = getSearchParams(search) + " AND e.fireDate IS NULL";
 
         Query<Employee> employeeQuery = getReadyQuery(
                 search,
@@ -113,7 +126,9 @@ public class EmployeeDaoImpl implements EmployeeDAO {
         String query = getSearchParams(search);
 
         String entityName = query +
-                getEntityName(TEMPLATE_OF_JOINING_QUERY + TEMPLATE_OF_INSERTING_QUERY_PARAMS + " AND fireDate IS NULL",
+                getEntityName(TEMPLATE_OF_JOINING_QUERY +
+                                "e.%s = %s " +
+                                "AND e.fireDate IS NULL",
                         tableFieldName, ":currentId");
 
         Query<Employee> employeeQuery = getReadyQuery(
@@ -132,7 +147,9 @@ public class EmployeeDaoImpl implements EmployeeDAO {
     public Page<Employee> findEmployeesInCurrentPlace(Long id, String tableFieldName, Pageable pageable) {
         Session session = this.sessionFactory.getCurrentSession();
 
-        String entityName = "FROM Employee WHERE " + tableFieldName + " = :id AND fireDate IS NULL";
+        String entityName = "SELECT e FROM Employee e " + JOINS + "WHERE " + "e." + tableFieldName
+                + " = :id AND e.fireDate IS NULL";
+
         Query<Employee> employeeQuery = session.createQuery(entityName,
                 Employee.class);
         employeeQuery.setParameter("id", id);
@@ -146,7 +163,7 @@ public class EmployeeDaoImpl implements EmployeeDAO {
     public List<Employee> findEmployeeInCurrentPlace(Long placeId, String entityName) {
         final Session session = this.sessionFactory.getCurrentSession();
 
-        String hql = String.format("FROM Employee WHERE %s = :id", entityName);
+        String hql = String.format("SELECT e FROM Employee e " + JOINS + "WHERE e.%s = :id", entityName);
 
         Query<Employee> employeeQuery = session.createQuery(hql, Employee.class);
         employeeQuery.setParameter("id", placeId);
@@ -158,19 +175,21 @@ public class EmployeeDaoImpl implements EmployeeDAO {
     public List<Employee> getSpecificEmployees(String tableFieldName) {
         final Session session = this.sessionFactory.getCurrentSession();
 
-        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-        CriteriaQuery<Employee> criteriaQuery = criteriaBuilder.createQuery(Employee.class);
-        Root<Employee> root = criteriaQuery.from(Employee.class);
-        criteriaQuery.select(root)
-                .where(criteriaBuilder
-                        .and(criteriaBuilder
-                                .isNull(root.get(tableFieldName)),
-                        criteriaBuilder
-                                .isNull(root.get("fireDate"))
-                        )
-                );
+//        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+//        CriteriaQuery<Employee> criteriaQuery = criteriaBuilder.createQuery(Employee.class);
+//        Root<Employee> root = criteriaQuery.from(Employee.class);
+//        criteriaQuery.select(root)
+//                .where(criteriaBuilder
+//                        .and(criteriaBuilder
+//                                .isNull(root.get(tableFieldName)),
+//                        criteriaBuilder
+//                                .isNull(root.get("fireDate"))
+//                        )
+//                );
 
-        Query<Employee> employeeQuery = session.createQuery(criteriaQuery);
+        String hql = String.format("SELECT e FROM Employee e " + JOINS + "WHERE e.%s IS NULL", tableFieldName);
+
+        Query<Employee> employeeQuery = session.createQuery(hql, Employee.class);
 
         return employeeQuery.getResultList();
     }
@@ -179,7 +198,7 @@ public class EmployeeDaoImpl implements EmployeeDAO {
     public List<Employee> getSelectedEmployees(List<Long> id) {
         final Session session = this.sessionFactory.getCurrentSession();
 
-        Query<Employee> employeeQuery = session.createQuery("FROM Employee WHERE id IN (:ids)", Employee.class);
+        Query<Employee> employeeQuery = session.createQuery("SELECT e FROM Employee e WHERE e.id IN (:ids)", Employee.class);
         employeeQuery.setParameterList("ids", id);
 
         return employeeQuery.getResultList();

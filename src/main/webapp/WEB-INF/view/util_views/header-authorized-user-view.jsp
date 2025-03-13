@@ -7,10 +7,7 @@
             <i class="fa-solid fa-user"></i>
         </button>
 
-        <c:url var="profile" value="/profile">
-            <c:param name="user" value="${ user }" />
-        </c:url>
-
+        <c:url var="profile" value="/profile" />
         <c:choose>
             <c:when test="${ mode }">
                 <c:url var="themeMode" value="/lightMode" />

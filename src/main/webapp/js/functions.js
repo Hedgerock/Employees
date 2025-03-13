@@ -39,7 +39,7 @@ export function initButton (iconValue, className, onClick) {
     return currentButton;
 }
 
-export const initBurger = () => {
+export function initBurger() {
     header.prepend(burgerButton);
 }
 

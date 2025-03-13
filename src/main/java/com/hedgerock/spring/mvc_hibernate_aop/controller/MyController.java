@@ -11,15 +11,13 @@ import com.hedgerock.spring.mvc_hibernate_aop.service.histrory_service.HistorySe
 import com.hedgerock.spring.mvc_hibernate_aop.service.nationality_service.NationalityService;
 import com.hedgerock.spring.mvc_hibernate_aop.service.phoneService.PhoneService;
 import com.hedgerock.spring.mvc_hibernate_aop.service.picture_service.PictureService;
-import com.hedgerock.spring.mvc_hibernate_aop.utils.Attributes;
-import com.hedgerock.spring.mvc_hibernate_aop.utils.Views;
+import com.hedgerock.spring.mvc_hibernate_aop.service.user_service.UserService;
 import com.hedgerock.spring.mvc_hibernate_aop.utils.default_parameters.SetDefaultParameters;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -60,6 +58,9 @@ public abstract class MyController {
     protected NationalityService nationalityService;
 
     @Autowired
+    protected UserService userService;
+
+    @Autowired
     protected PictureService pictureService;
 
     @Autowired
@@ -87,8 +88,7 @@ public abstract class MyController {
         Pageable pageable = PageRequest.of(page, size);
         String username = (String) request.getAttribute("user");
 
-        Optional<User> user = this.generalInfoService
-                .findCurrentEntity(username, "User", "username", User.class);
+        Optional<User> user = this.userService.getUser(username);
 
         if (user.isPresent()) {
             User currentUser = user.get();

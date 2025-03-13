@@ -23,6 +23,13 @@ public class User {
     @OneToMany(cascade =  CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
     private List<Authority> authorities;
 
+    @Column(name="users_details_id", insertable = false, updatable = false)
+    private Long userDetailsId;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch =  FetchType.LAZY)
+    @JoinColumn(name = "users_details_id")
+    private UserDetails userDetails;
+
     @Column(name="creation_date")
     private LocalDate creationDate;
 
@@ -89,5 +96,21 @@ public class User {
 
     public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public Long getUserDetailsId() {
+        return userDetailsId;
+    }
+
+    public void setUserDetailsId(Long userDetailsId) {
+        this.userDetailsId = userDetailsId;
+    }
+
+    public UserDetails getUserDetails() {
+        return userDetails;
+    }
+
+    public void setUserDetails(UserDetails userDetails) {
+        this.userDetails = userDetails;
     }
 }

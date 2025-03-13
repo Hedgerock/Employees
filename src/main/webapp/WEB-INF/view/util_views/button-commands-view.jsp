@@ -2,13 +2,14 @@
 <!DOCTYPE html>
 <html lang="en">
     <body>
+        <c:set var="curContent" value="${ not empty employee ? employee : content }" />
         <c:set var="paramDepId" value="${ param.depId }" />
         <c:set var="isParamDepIdNotEmpty" value="${ not empty paramDepId }" />
-        <c:set var="employeeId" value="${ employee.id }" />
-        <c:set var="employeeDetailsId" value="${ employee.employeeDetailsId }" />
+        <c:set var="employeeId" value="${ not empty curContent.id ? curContent.id : employee.id }" />
+        <c:set var="employeeDetailsId" value="${ not empty curContent.employeeDetailsId ? curContent.employeeDetailsId : employee.employeeDetailsId }" />
         <c:set var="paramPage" value="${ param.page }" />
         <c:set var="actualEmployeeId" value="${ empty employeeId ? id : employeeId }"/>
-        <c:set var="employeeDepartmentId" value="${ employee.department.id }" />
+        <c:set var="employeeDepartmentId" value="${ curContent.department.id }" />
         <c:set var="cityId" value="${ param.cityId }" />
         <c:set var="isCityNotEmpty" value="${ not empty cityId }" />
         <c:set var="natId" value="${ param.natId }" />
@@ -204,10 +205,10 @@
             <c:param name = "depId" value = "${ not empty employeeDepartmentId ? employeeDepartmentId : depId  }" />
         </c:url>
         <c:url var = "currentCity" value = "/showCurrentCity">
-            <c:param name = "cityId" value = "${ employee.cityId }" />
+            <c:param name = "cityId" value = "${ curContent.cityId }" />
         </c:url>
         <c:url var = "currentNationality" value = "/showCurrentNationality">
-            <c:param name = "natId" value = "${ employee.nationalityId }" />
+            <c:param name = "natId" value = "${ curContent.nationalityId }" />
         </c:url>
     </body>
 </html>

@@ -7,7 +7,7 @@ public class Attributes {
 
     public static final Integer DEFAULT_MIN_SALARY = 500;
 
-    public static final String DEFAULT_PAGE_SIZE = "10";
+    public static final String DEFAULT_PAGE_SIZE = "15";
     public static final String OK = "ok";
     public static final String PAGEABLE_TITLE = "pageable";
 

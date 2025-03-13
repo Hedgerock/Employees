@@ -6,8 +6,8 @@
     <fieldset class="current-employee-fieldset current-employee-fieldset_phones">
         <legend class="current-employee-fieldset__legend">Phone numbers</legend>
         <c:choose>
-            <c:when test = "${ not empty currentEmployeeDetails.phoneNumbers }">
-                <c:forEach var="phone" items="${ currentEmployeeDetails.phoneNumbers }" varStatus = "status">
+            <c:when test = "${ not empty phoneNumbers }">
+                <c:forEach var="phone" items="${ phoneNumbers }" varStatus = "status">
                     <jsp:include page = "../../form_views/text-number-input-view.jsp">
                         <jsp:param name = "formTitle" value = "current-employee-form" />
                         <jsp:param name = "labelTitle" value = "Enter current Employee phone number" />

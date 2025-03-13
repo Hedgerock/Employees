@@ -23,19 +23,19 @@ public class SocialMedia {
     @Column(name = "linkedin_id", insertable = false, updatable = false)
     private Long linkedInId;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "viber_id")
     private Viber viber;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "telegram_id")
     private Telegram telegram;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "whatsapp_id")
     private WhatsApp whatsApp;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "linkedin_id")
     private LinkedIn linkedIn;
 

@@ -4,10 +4,10 @@
     <td class="content-table-row__value">
         <a 
             class="content-table-row__link"
-            href="${ param.deleteButton }" 
-            title = "Delete employee ${ employee.firstName }"
+            href="${ param.historyButton }" 
+            title = "Show ${ content.firstName } history"
         >
-            <i class="fa-solid fa-trash"></i>
+            <i class="fa-solid fa-book"></i>
         </a>
     </td>
 </body>

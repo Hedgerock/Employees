@@ -38,6 +38,7 @@ public class HistoryListController extends MyController {
         if (!status.equals(OK)) return status;
 
         model.addAttribute(ALL_EMPLOYEES_ATTRIBUTE, employeeList.getContent());
+        model.addAttribute("pageTitle", "Employees history page");
 
         return MAIN_VIEW;
     }

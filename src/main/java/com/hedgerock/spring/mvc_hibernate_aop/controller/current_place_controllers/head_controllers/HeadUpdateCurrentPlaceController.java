@@ -47,7 +47,7 @@ public class HeadUpdateCurrentPlaceController extends MyController {
 
             model.addAttribute("updateAttributes", updateAttributes);
             model.addAttribute(entityName, currentPlace);
-            model.addAttribute("title", title);
+            model.addAttribute("pageTitle", title);
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
@@ -81,7 +81,7 @@ public class HeadUpdateCurrentPlaceController extends MyController {
 
             model.addAttribute("updateAttributes", cityUpdateCurrentPlaceAttributes);
             model.addAttribute(entityName, currentPlace);
-            model.addAttribute("title", name + ": update page");
+            model.addAttribute("pageTitle", name + ": update page");
             model.addAttribute("allEmployees", employees);
             model.addAttribute("idCollector", new IdCollector());
         } catch (Exception e) {

@@ -52,7 +52,7 @@ public class CurrentPlacesHistoryLists extends MyController {
     private String initHistory(String entityName, Model model, String idTitle, Pageable pageable) {
         Page<CurrentPlaceDTO> currentPlaceDTOS = this.historyService.getCurrentPlaceHistory(entityName, pageable);
         model.addAttribute("currentPlaces", currentPlaceDTOS.getContent());
-        model.addAttribute("title", "History of " + entityName + " page");
+        model.addAttribute("pageTitle", "History of " + entityName + " page");
         model.addAttribute("idTitle", idTitle);
 
         return MAIN_VIEW;

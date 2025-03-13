@@ -19,6 +19,7 @@ import static com.hedgerock.spring.mvc_hibernate_aop.utils.default_parameters.Se
 @Controller
 @RequestMapping("/")
 public class ShowAllEmployeesController extends MyController {
+    private static final String PAGE_TITLE = "Main page: %s";
 
     @ModelAttribute
     private void initAttr(
@@ -37,6 +38,7 @@ public class ShowAllEmployeesController extends MyController {
 
         final GeneralInfo generalInfo = this.generalInfoService.getGeneralInfo();
         model.addAttribute("generalInfo", generalInfo);
+        model.addAttribute("pageTitle", String.format(PAGE_TITLE, "All employees"));
 
         return MAIN_VIEW;
     }
@@ -49,6 +51,7 @@ public class ShowAllEmployeesController extends MyController {
         final String result = initAllEmployees(model, "/firedEmployees", redirectAttributes, true);
 
         model.addAttribute("altAction", "/firedEmployees");
+        model.addAttribute("pageTitle", String.format(PAGE_TITLE, "All fired employees"));
         return result.equals(OK) ? MAIN_VIEW : result;
     }
 

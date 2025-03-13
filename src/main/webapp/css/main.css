@@ -1,3 +1,31 @@
+:root[type="light"],
+:root {
+    --mainRevBgClr: #147699;
+    --mainRevTxtClr: #ffffff;
+
+    --mainBgClr: #a9dec6;
+    --mainTxtClr: #28536B;
+
+    --defClr: black;
+
+    --bgALterTableClr: #8ccdaf;
+    --warningClr: #d28a5a;
+}
+
+
+:root[type="dark"] {
+    --mainRevBgClr: #1F1B24;
+    --mainRevTxtClr: #BB86FC;
+
+    --mainBgClr: #2E2C33;
+    --mainTxtClr: #E0E0E0;
+
+    --defClr: #ccb8b8;
+
+    --bgALterTableClr: #665C74;
+    --warningClr: #d28a5a;
+}
+
 :root {
     --mainRevBgClr: #147699;
     --mainRevTxtClr: #a9dec6;
@@ -454,7 +482,6 @@ input, select, option {
 .main-container {
     display: var(--flexDisplay);
     flex-direction: var(--flexDirection);
-    gap: var(--thinGap);
     height: var(--allArea);
 }
 
@@ -727,6 +754,17 @@ input, select, option {
     width: 325px;
 
     cursor: pointer;
+}
+
+.head {
+    display: var(--flexDisplay);
+    gap: var(--medGap);
+    align-self: flex-start;
+}
+
+.current-user {
+    display: var(--flexDisplay);
+    flex-direction: var(--flexDirection);
 }
 
 .current-user-options {
@@ -1361,7 +1399,7 @@ input, select, option {
 
 .update-info {
     position: fixed;
-    z-index: 40;
+    z-index: 200;
     display: var(--flexDisplay);
     flex-direction: var(--flexDirection);
     align-items: var(--flexAi);
@@ -1680,6 +1718,39 @@ input, select, option {
 
 .pagination__current-page {
     color: var(--warningClr);
+}
+
+.user-details {
+    display: var(--flexDisplay);
+    flex-direction: var(--flexDirection);
+
+    gap: var(--thinGap);
+    
+    width: var(--allArea);
+}
+
+.user-details__item {
+    border: 2px solid var(--mainTxtClr);
+    display: var(--flexDisplay);
+    border-radius: var(--borderR1);
+
+    font-size: var(--fontSize30);
+
+    padding: var(--superThinPad) var(--thinPad);
+}
+
+.user-details::before {
+    content: attr(data-title)":";
+
+    font-size: var(--fontSize50);
+    font-weight: bold;
+    color: var(--mainTxtClr);
+}
+
+.user-details__item::before {
+    content: attr(data-title)': ';
+    font-weight: bold;
+    width: 200px;
 }
 
 .footer-list {

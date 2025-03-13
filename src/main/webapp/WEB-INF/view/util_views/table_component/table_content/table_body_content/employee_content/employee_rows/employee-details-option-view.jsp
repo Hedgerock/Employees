@@ -4,11 +4,11 @@
 <body>
     <td class="content-table-row__value">
         <c:choose>
-            <c:when test = "${ employee.employeeDetails.hasNullFields }">
+            <c:when test = "${ content.employeeDetails.hasNullFields }">
                 <a 
                     class="content-table-row__link"
                     href="${ param.updateDetailsButton }" 
-                    title = "Add employee additional info for ${ employee.firstName }"
+                    title = "Add employee additional info for ${ content.firstName }"
                 >
                     <i class="fa-solid fa-plus"></i>
                 </a>
@@ -17,7 +17,7 @@
                 <a 
                     class="content-table-row__link"
                     href="${ param.updateDetailsButton }" 
-                    title = "Edit employee additional info for ${ employee.firstName }"
+                    title = "Edit employee additional info for ${ content.firstName }"
                 >
                     <i class="fa-solid fa-user-pen"></i>
                 </a>

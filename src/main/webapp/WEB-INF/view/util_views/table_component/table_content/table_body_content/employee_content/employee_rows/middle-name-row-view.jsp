@@ -3,9 +3,9 @@
 <html lang="en">
 <body>
     <td class="content-table-row__value">
-        <c:set var = "isNotEmpty" value = "${ not empty employee.middleName }"/>
-        <c:set var = "showTitle" value = "Show details of ${ employee.firstName } ${ employee.lastName }" />
-        <c:set var = "updateTitle" value = "Update middle name for  ${ employee.firstName } ${ employee.lastName }" />
+        <c:set var = "isNotEmpty" value = "${ not empty content.middleName }"/>
+        <c:set var = "showTitle" value = "Show details of ${ content.firstName } ${ content.lastName }" />
+        <c:set var = "updateTitle" value = "Update middle name for  ${ content.firstName } ${ content.lastName }" />
 
         <a
             class="content-table-row__link"
@@ -14,8 +14,8 @@
             title = "${ isNotEmpty ? showTitle : updateTitle }"
         >
             <c:choose>
-                <c:when test = "${ not empty employee.middleName }">
-                    ${ employee.middleName }
+                <c:when test = "${ not empty content.middleName }">
+                    ${ content.middleName }
                 </c:when>
                 <c:otherwise>
                     Empty

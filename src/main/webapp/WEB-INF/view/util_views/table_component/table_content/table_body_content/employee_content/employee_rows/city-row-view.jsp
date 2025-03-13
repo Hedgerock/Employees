@@ -5,24 +5,24 @@
     <td class="content-table-row__value">
         <c:choose>
             <c:when test = "${ param.page == 'showCurrentCity' }">
-                ${ employee.city.name }
+                ${ content.city.name }
             </c:when>
             <c:otherwise>
                 <c:choose>
-                    <c:when test = "${ not empty employee.city }">
+                    <c:when test = "${ not empty content.city }">
                         <a 
                             class="content-table-row__link"
                             href="${ param.currentCity }" 
-                            title = "Show city ${ employee.city.name }"
+                            title = "Show city ${ content.city.name }"
                         >
-                            ${ employee.city.name }
+                            ${ content.city.name }
                         </a>
                     </c:when>
                     <c:otherwise>
                         <a 
                             class="content-table-row__link"
                             href="${ param.updateButton }" 
-                            title = "Update info ${ employee.firstName } ${ employee.lastName } ${ employee.middleName }"
+                            title = "Update info ${ content.firstName } ${ content.lastName } ${ content.middleName }"
                         >
                             -
                         </a>

@@ -31,12 +31,22 @@ public class DAOUtil {
             return "";
         }
 
-        StringBuilder query = new StringBuilder("FROM Employee WHERE ");
+        StringBuilder query = new StringBuilder("SELECT e FROM Employee e " +
+                "JOIN FETCH e.department " +
+                "JOIN FETCH e.nationality " +
+                "JOIN FETCH e.city " +
+                "JOIN FETCH e.employeeDetails ed " +
+                "LEFT JOIN FETCH ed.emails " +
+                "LEFT JOIN FETCH ed.phoneNumbers " +
+                "LEFT JOIN FETCH ed.socialMedia " +
+                "LEFT JOIN FETCH ed.picture " +
+                "LEFT JOIN FETCH ed.employeeDescription " +
+                "WHERE ");
 
         IntStream.range(0, length)
                 .forEach(i -> {
                     String currentTitle = queryParams[i].getName();
-                    query.append(currentTitle).append(" = :param").append(i);
+                    query.append("e.").append(currentTitle).append(" = :param").append(i);
 
                     if (i < length - 1) {
                         query.append(TEMPLATE_OF_JOINING_QUERY);
@@ -64,10 +74,6 @@ public class DAOUtil {
 
     public static <T> Query<T> initQuery(Class<T>tClass, Session session, String entityName) {
         return session.createQuery(entityName, tClass);
-    }
-
-    public static <T> Query<T> initQuery(Session session, String entityName) {
-        return session.createQuery(entityName);
     }
 
     public static Query<Employee> getReadyQuery(String search, Session session, String entityName, Long id) {
@@ -248,9 +254,8 @@ public class DAOUtil {
     }
 
     public static <T> Page<T> initPage(Session session, Pageable pageable, Query<T>
-            query, String entityName) {
+            query, String counter) {
 
-        String counter = "SELECT COUNT(id) " + entityName;
         Long totalEmployees = initQuery(Long.class, session, counter).uniqueResult();
         query.setFirstResult((int) pageable.getOffset());
         query.setMaxResults(pageable.getPageSize());

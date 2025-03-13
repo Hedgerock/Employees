@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 import static com.hedgerock.spring.mvc_hibernate_aop.utils.Attributes.OK;
 import static com.hedgerock.spring.mvc_hibernate_aop.utils.default_parameters.SetDefaultParameterCurrentPlace.initShowPlacesAttributes;
 import static com.hedgerock.spring.mvc_hibernate_aop.utils.default_parameters.SetDefaultParameters.initPageable;
@@ -45,12 +47,18 @@ public class HeadShowPlacesController extends MyController {
         final String status = initPagination(pageable, redirectAttributes, currentPage, model, path);
         if (!status.equals(OK)) return status;
 
+        List<T>content = currentPage.getContent();
+
         final ShowPlacesAttributes<T> showPlacesAttributes = initShowPlacesAttributes(
-                currentPage.getContent(),
+                content,
                 pageName, addHref, buttonContent, idTitle, title
         );
 
         model.addAttribute("showPlacesAttributes", showPlacesAttributes);
+
+        if (content.isEmpty()) {
+            model.addAttribute("imgValue", entityLocation);
+        }
 
         return OK;
     }

@@ -1,6 +1,7 @@
 package com.hedgerock.spring.mvc_hibernate_aop.controller.employee_details_controllers;
 
 import com.hedgerock.spring.mvc_hibernate_aop.controller.MyController;
+import com.hedgerock.spring.mvc_hibernate_aop.entity.Employee;
 import com.hedgerock.spring.mvc_hibernate_aop.entity.employee_details.EmployeeDetails;
 import com.hedgerock.spring.mvc_hibernate_aop.entity.employee_details.Picture;
 import com.hedgerock.spring.mvc_hibernate_aop.utils.Redirects;
@@ -39,13 +40,14 @@ public class SaveUpdateImage extends MyController {
         try {
             String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
 
-            EmployeeDetails employeeDetails = getCurrentValue(empDetId, "EmployeeDetails",
-                    EmployeeDetails.class, this.generalInfoService);
+            Employee employee = getCurrentValue(empId, "Employee", Employee.class, this.generalInfoService);
 
-            if (employeeDetails == null) {
-                redirectAttributes.addFlashAttribute("message", "Details are not found");
+            if (employee == null) {
+                SetDefaultParameters.initNotFoundFlashAttr(redirectAttributes, "Employee");
                 return Redirects.REDIRECT_TO_NOT_FOUND_PAGE;
             }
+
+            EmployeeDetails employeeDetails = employee.getEmployeeDetails();
 
             Picture picture = initPicture(employeeDetails);
 

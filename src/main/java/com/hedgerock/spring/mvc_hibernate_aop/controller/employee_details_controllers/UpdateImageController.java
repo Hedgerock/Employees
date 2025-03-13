@@ -42,7 +42,7 @@ public class UpdateImageController extends MyController {
         checkPicture(employee.getEmployeeDetails(), this.servletContext, model);
 
         model.addAttribute("employee", employee);
-        SetDefaultParameters.setSearch(SEARCH_EMPLOYEES_NAME, model, search);
+        model.addAttribute("pageTitle", "Update image page");
 
         return MAIN_VIEW;
     }

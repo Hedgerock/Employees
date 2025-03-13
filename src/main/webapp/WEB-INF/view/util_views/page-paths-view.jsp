@@ -49,6 +49,10 @@
         <c:when test="${ pagePath == 'history' }">
             <c:set var="currentPath" value="history/history-view.jsp" />
         </c:when>
+
+        <c:when test="${ pagePath == 'notFoundPage' }">
+            <c:set var="currentPath" value="util_views/not-found-view.jsp" />
+        </c:when>
     </c:choose>
 </body>
 </html>

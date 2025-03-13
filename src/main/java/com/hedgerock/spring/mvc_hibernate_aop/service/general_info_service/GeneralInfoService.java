@@ -14,12 +14,12 @@ public interface GeneralInfoService {
     <T> T saveCurrentEntity(T entity);
     <T> Page<T> getCurrentEntitiesList(Class<T> tClass, String entityName, Pageable pageable);
     <T> List<T> getCurrentEntitiesList(Class<T> tClass, String entityName);
+    <T> List<T> getCurrentEntitiesList(Class<T> tClass, String entityName, String fieldName, Long id);
+
     <T> Optional<T> findCurrentEntity(Long id, String entityName, Class<T> tClass);
     <T> Optional<T> findCurrentEntity(Long id, String entityName, Class<T> tClass, boolean isLookingForFired);
     <T> Optional<T> findCurrentEntity(String name, String entityName, Class<T> tClass);
     <T> Optional<T> findCurrentEntity(String name, String entityName, String fieldName, Class<T> tClass);
-
-    <T> void updateEntityStatistic(T entity, Long id, String queryName);
 
     <T> Page<T> getCurrentEntitiesPage(Class<T> tClass, String entityName, Pageable pageable);
 

@@ -4,25 +4,25 @@
 <body>
     <td class="content-table-row__value">
         <c:choose>
-            <c:when test = "${ param.page == 'showCurrentDepartment' }">
-                ${ employee.department.name }
+            <c:when test = "${ param.page == 'showCurrentNationality' }">
+                ${ content.nationality.name }
             </c:when>
             <c:otherwise>
                 <c:choose>
-                    <c:when test = "${ not empty employee.department }">
+                    <c:when test = "${ not empty content.nationality }">
                         <a 
                             class="content-table-row__link"
-                            href="${ param.currentDepartment }" 
-                            title = "Show department ${ employee.department.name }"
+                            href="${ param.currentNationality }" 
+                            title = "Show nationality ${ content.nationality.name }"
                         >
-                            ${ employee.department.name }
+                            ${ content.nationality.name }
                         </a>
                     </c:when>
                     <c:otherwise>
                         <a 
                             class="content-table-row__link"
                             href="${ param.updateButton }" 
-                            title = "Update info ${ employee.department.name }"
+                            title = "Update info ${ content.nationality.name }"
                         >
                             -
                         </a>

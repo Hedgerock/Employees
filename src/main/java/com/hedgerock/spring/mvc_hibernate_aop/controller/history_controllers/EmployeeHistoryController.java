@@ -101,7 +101,7 @@ public class EmployeeHistoryController extends MyController {
 
         model.addAttribute("revisions", content);
         model.addAttribute("id", id);
-        model.addAttribute("title", String.format(
+        model.addAttribute("pageTitle", String.format(
                 prefix + " %s %s %s: history page",
                 employee.getFirstName(),
                 employee.getLastName(),

@@ -6,7 +6,7 @@
     <tr class="content-table-row" >
        <c:choose>
             <c:when test="${ not showAttributes.hasSingleValue }">
-                <td class="content-table-row__value">${status.index + 1}</td>
+                <td class="content-table-row__value">${indexVal}</td>
             </c:when>
        </c:choose>
         <td class="content-table-row__value">

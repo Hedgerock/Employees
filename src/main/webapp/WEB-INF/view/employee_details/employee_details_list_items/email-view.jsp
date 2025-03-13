@@ -3,15 +3,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <body>
-    <c:set var="isMoreThanOne" value = "${ fn:length(employee.employeeDetails.emails) > 1 }"/>
+    <c:set var="isMoreThanOne" value = "${ emails.size() > 1 }"/>
     <li
         class = "employee-details-list__item"
         data-title = "Email${ isMoreThanOne ? 's' : '' }"
     >
         <c:choose>
-            <c:when test = "${ not empty employee.employeeDetails.emails }">
+            <c:when test = "${ not empty emails }">
                 <ul class="values-list">
-                    <c:forEach var = "email" items = "${ employee.employeeDetails.emails }"  varStatus = "status">
+                    <c:forEach var = "email" items = "${ emails }"  varStatus = "status">
                         <li class="values-list-item">
                             <c:choose>
                                 <c:when test = "${ isMoreThanOne }">

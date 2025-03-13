@@ -32,12 +32,8 @@ public class SetDefaultParametersHistory extends SetDefaultParameters {
                 pageable, redirectAttributes, revisions, model, path);
         if (!status.equals(OK)) return status;
 
-        model.addAttribute("revisions", revisions.getContent());
-        model.addAttribute("title", String.format(
-                TEMPLATE_OF_HISTORY_TITLE,
-                name
-        ));
-
+        model.addAttribute("revisions", revisions.getContent());;
+        model.addAttribute("pageTitle", String.format(TEMPLATE_OF_HISTORY_TITLE, name));
         model.addAttribute("idTitle", idTitle);
 
         return "skeleton-view";

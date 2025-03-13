@@ -2,8 +2,7 @@ package com.hedgerock.spring.mvc_hibernate_aop.entity.employee_details;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name="pictures")
@@ -16,8 +15,8 @@ public class Picture {
     @Column(name="link")
     private String pictureSrc;
 
-    @OneToMany(mappedBy = "picture", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<PrevPicture> pictures;
+    @OneToMany(mappedBy = "picture", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<PrevPicture> pictures;
 
     @OneToOne(mappedBy = "picture", cascade = CascadeType.ALL)
     EmployeeDetails employeeDetails;
@@ -39,18 +38,18 @@ public class Picture {
 
     public void addPicture(PrevPicture picture) {
         if (this.pictures == null) {
-            this.pictures = new ArrayList<>();
+            this.pictures = new LinkedHashSet<>();
         }
 
         this.pictures.add(picture);
         picture.setPicture(this);
     }
 
-    public List<PrevPicture> getPictures() {
+    public Set<PrevPicture> getPictures() {
         return pictures;
     }
 
-    public void setPictures(List<PrevPicture> pictures) {
+    public void setPictures(Set<PrevPicture> pictures) {
         this.pictures = pictures;
     }
 

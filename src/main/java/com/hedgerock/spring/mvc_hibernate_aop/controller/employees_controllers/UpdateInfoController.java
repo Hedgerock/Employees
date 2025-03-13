@@ -1,6 +1,5 @@
 package com.hedgerock.spring.mvc_hibernate_aop.controller.employees_controllers;
 
-import com.hedgerock.spring.mvc_hibernate_aop.controller.MyController;
 import com.hedgerock.spring.mvc_hibernate_aop.entity.employee_details.EmployeeDetails;
 import com.hedgerock.spring.mvc_hibernate_aop.entity.places.City;
 import com.hedgerock.spring.mvc_hibernate_aop.entity.places.Department;

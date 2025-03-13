@@ -50,7 +50,7 @@ public class Employee {
     @Column(name = "nationality_id", insertable = false, updatable = false)
     private Long nationalityId;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id")
     @Audited
     private Department department;
@@ -75,17 +75,17 @@ public class Employee {
     )
     private Long employeeDetailsId;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_details_id")
     @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
     private EmployeeDetails employeeDetails;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "city_id")
     @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
     private City city;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "nationality_id")
     @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
     private Nationality nationality;

@@ -20,8 +20,7 @@ public class SetDefaultParameterCurrentPlace extends SetDefaultParameters {
     public static Page<Employee> getSpecificEmployees(
             String searchParams, Long id, EmployeeService employeeService, String tableFieldName, Pageable pageable) {
         Page<Employee> employees = searchParams != null && !searchParams.isEmpty()
-                ? employeeService.findEmployeesInCurrentPlace(
-                id, searchParams, tableFieldName, pageable)
+                ? employeeService.findEmployeesInCurrentPlace(id, searchParams, tableFieldName, pageable)
                 : employeeService.findEmployeesInCurrentPlace(id, tableFieldName, pageable);
 
         validateEmployeeDetails(employees);

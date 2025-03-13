@@ -42,5 +42,6 @@
             >   Confirm
             </button>
         </form:form>
+        <script type="module" src="${ pageContext.request.contextPath }/js/emails/emailMain.js"></script>
     </body>
 </html>

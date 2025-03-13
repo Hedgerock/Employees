@@ -58,6 +58,7 @@ public class UpdateSocialMediaController extends MyController {
 
         model.addAttribute("employee", employee);
         model.addAttribute("socialMedia", socialMedia);
+        model.addAttribute("pageTitle", "Update social media page");
 
         return MAIN_VIEW;
     }

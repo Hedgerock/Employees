@@ -53,7 +53,7 @@ public class SetDefaultParameters {
         Map<String, String> nationalities = getMap(nationalitiesList);
 
         setEmployee(model, employee);
-        model.addAttribute("title", title);
+        model.addAttribute("pageTitle", title);
 
         setCurrentSelect(model, "optionCollection", departments);
         setCurrentSelect(model, "citiesCollection", cities);
@@ -143,28 +143,6 @@ public class SetDefaultParameters {
         return employees;
     }
 
-    public static Page<Employee> getEmployees(
-            EmployeeService employeeService, String search, Pageable pageable, boolean isLookingForFired) {
-        Page<Employee> employees;
-
-        if (!isLookingForFired) {
-            return getEmployees(employeeService, search, pageable);
-        }
-
-        System.out.println("Search from fired employees: " + search);
-
-        if (search != null && !search.isEmpty()) {
-            String searchParam = search.toLowerCase();
-            employees = employeeService.getSearchedEmployees(searchParam, pageable, true);
-        } else {
-            employees = employeeService.getAllEmployees(pageable,true);
-        }
-
-        validateEmployeeDetails(employees);
-
-        return employees;
-    }
-
     public static void validateEmployeeDetails(Page<Employee> employees) {
         employees.forEach(employee -> {
             if (employee.getEmployeeDetails() != null) {
@@ -178,23 +156,49 @@ public class SetDefaultParameters {
         });
     }
 
-    public static void saveEmailsAndPhones(
-            final List<String> emails, final List<String> phones, Employee employee, EmployeeDetails employeeDetails) {
+    public static Page<Employee> getEmployees(
+            EmployeeService employeeService, String search, Pageable pageable, boolean isLookingForFired) {
+        Page<Employee> employees;
 
-        List<PhoneNumber> currentPhones = getCurrentCollection(
-                phones, employee.getEmployeeDetails().getPhoneNumbers(), PhoneNumber.class
+        if (!isLookingForFired) {
+            return getEmployees(employeeService, search, pageable);
+        }
+
+        if (search != null && !search.isEmpty()) {
+            String searchParam = search.toLowerCase();
+            employees = employeeService.getSearchedEmployees(searchParam, pageable, true);
+        } else {
+            employees = employeeService.getAllEmployees(pageable,true);
+        }
+
+        validateEmployeeDetails(employees);
+
+        return employees;
+    }
+
+    public static void saveEmailsAndPhones(
+            final List<String> emails, final List<String> phones, Employee employee,
+            EmployeeDetails employeeDetails, GeneralInfoService generalInfoService) {
+
+        List<PhoneNumber>curPhoneNumbers = employeeDetails.getPhoneNumbers().stream().toList();
+        List<Email>curEmails = employeeDetails.getEmails().stream().toList();
+
+        Set<PhoneNumber> currentPhones = getCurrentCollection(
+                phones, curPhoneNumbers, PhoneNumber.class
         );
 
-        List<Email>currentEmails = getCurrentCollection(
-                emails, employee.getEmployeeDetails().getEmails(), Email.class);
+        Set<Email>currentEmails = getCurrentCollection(
+                emails, curEmails, Email.class);
 
         employee.setEmployeeDetails(employeeDetails);
         employeeDetails.setEmployee(employee);
         employeeDetails.addEmails(currentEmails);
         employeeDetails.addPhoneNumbers(currentPhones);
+
+        generalInfoService.saveCurrentEntity(employeeDetails);
     }
 
-    public static <T> List<T> getCurrentCollection(
+    public static <T> Set<T> getCurrentCollection(
             List<String>values, List<T>entitiesList, Class<T>curClass) {
         return IntStream.range(0, values.size()).mapToObj(i -> {
             final String value = values.get(i);
@@ -210,7 +214,7 @@ public class SetDefaultParameters {
             } catch (Exception e) {
                 throw new RuntimeException(e.getMessage());
             }
-        }).collect(Collectors.toList());
+        }).collect(Collectors.toCollection(HashSet::new));
     }
 
     public static <T> void addEmployeesToCurrentPlace(
@@ -416,8 +420,7 @@ public class SetDefaultParameters {
             Long id = invokeMethod(currentPlace, "getId", Long.class);
             return getRedirect(id, redirectTemplate);
         } catch (Exception e) {
-            String failedOperation = operation.substring(0, operation.length() - 1);
-            e.printStackTrace();
+            String failedOperation = operation.substring(0, operation.length() - 1);;
             initFailedFlashAttrMethod(entityTitle, entity, redirectAttributes, failedOperation, e);
             return redirect;
         }
@@ -607,7 +610,10 @@ public class SetDefaultParameters {
         Picture picture = employeeDetails.getPicture();
 
         if (picture != null) {
-            slider = picture.getPictures().stream().map(PrevPicture::getPictureSrc).collect(Collectors.toList());
+            slider = picture.getPictures().stream()
+                    .sorted((a, b) -> b.getId().compareTo(a.getId()))
+                    .map(PrevPicture::getPictureSrc)
+                    .collect(Collectors.toList());
 
             if (picture.getPictureSrc() != null) {
                 slider.add(0, picture.getPictureSrc());
@@ -664,7 +670,4 @@ public class SetDefaultParameters {
         return search == null ? "" : search;
     }
 
-    public static UserDetails initUserDetails(Model model) {
-        return (UserDetails) model.getAttribute("userDetails");
-    }
 }

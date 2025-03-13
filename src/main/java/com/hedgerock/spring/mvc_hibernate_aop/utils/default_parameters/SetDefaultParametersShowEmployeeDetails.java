@@ -99,15 +99,19 @@ public class SetDefaultParametersShowEmployeeDetails extends SetDefaultParameter
         LocalDate hireDateValue = currentEmployee.getHireDate();
         TimeCarrier timeCarrier = initTimeCarrier(hireDateValue, "setHireDate");
 
-        String employeeDescription = currentEmployee.getEmployeeDetails().getEmployeeDescription().getValue();
-        String formattedEmpDesc = StringEscapeUtils.escapeHtml4(employeeDescription);
+        String rawEmployeeDescription = currentEmployee.getEmployeeDetails().getEmployeeDescription().getValue();
+
+        if (rawEmployeeDescription != null) {
+            String formattedEmpDesc = rawEmployeeDescription
+                    .replaceAll("\n", "<br>").replaceAll(" ", "&nbsp;");
+            model.addAttribute("employeeDescriptionAttribute", formattedEmpDesc);
+        }
 
         model.addAttribute("page", "showCurrentEmployeeDetails");
         model.addAttribute("depId", depId);
         model.addAttribute("cityId", cityId);
         model.addAttribute("natId", natId);
         model.addAttribute("timeCarrier", timeCarrier);
-        model.addAttribute("employeeDescriptionAttribute", formattedEmpDesc);
 
         EmployeeDetails employeeDetails = currentEmployee.getEmployeeDetails();
 
@@ -187,22 +191,22 @@ public class SetDefaultParametersShowEmployeeDetails extends SetDefaultParameter
     }
 
     public static boolean hasNullFields(Object object) {
-       try {
-           Field[] fields = object.getClass().getDeclaredFields();
-           for (Field field: fields) {
-               field.setAccessible(true);
-               Object value = field.get(object);
+        try {
+            Field[] fields = object.getClass().getDeclaredFields();
+            for (Field field: fields) {
+                field.setAccessible(true);
+                Object value = field.get(object);
 
-               if (value == null) {
-                   return true;
-               } else if (value instanceof Collection) {
-                   return ((Collection<?>) value).isEmpty();
-               }
+                if (value == null) {
+                    return true;
+                } else if (value instanceof Collection) {
+                    return ((Collection<?>) value).isEmpty();
+                }
 
-           }
-       } catch (IllegalAccessException e) {
-           throw new RuntimeException(e.getMessage());
-       }
+            }
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e.getMessage());
+        }
 
         return false;
     }

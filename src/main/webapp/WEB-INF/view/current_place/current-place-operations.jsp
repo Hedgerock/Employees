@@ -3,9 +3,9 @@
 <html lang="en">
 <body>
     <c:set var="dto" value="${ not empty showPlacesAttributes ? showPlacesAttributes : showAttributes }" />
-    <c:set var="id" value="${ not empty idValue ? idValue : currentPlace.id }" />
-    <c:set var="isZero" value="${ empty currentPlace.totalEmployees }" />
-    <c:set var="value" value="employee${ currentPlace.totalEmployees == 1 ? '' : 's' }" />
+    <c:set var="id" value="${ not empty idValue ? idValue : content.id }" />
+    <c:set var="isZero" value="${ empty content.totalEmployees }" />
+    <c:set var="value" value="employee${ content.totalEmployees == 1 ? '' : 's' }" />
 
     <c:choose>
         <c:when test="${ dto.placeTitle == 'cityId' }">

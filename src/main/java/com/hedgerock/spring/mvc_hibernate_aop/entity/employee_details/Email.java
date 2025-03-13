@@ -17,7 +17,7 @@ public class Email {
     @Column(name = "employee_details_id", insertable = false, updatable = false)
     private Long employeeDetailsId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_details_id")
     private EmployeeDetails employeeDetails;
 

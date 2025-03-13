@@ -2,7 +2,9 @@ package com.hedgerock.spring.mvc_hibernate_aop.controller.employee_details_contr
 
 import com.hedgerock.spring.mvc_hibernate_aop.controller.MyController;
 import com.hedgerock.spring.mvc_hibernate_aop.entity.Employee;
+import com.hedgerock.spring.mvc_hibernate_aop.entity.employee_details.Email;
 import com.hedgerock.spring.mvc_hibernate_aop.entity.employee_details.EmployeeDetails;
+import com.hedgerock.spring.mvc_hibernate_aop.entity.employee_details.PhoneNumber;
 import com.hedgerock.spring.mvc_hibernate_aop.utils.default_parameters.SetDefaultParameters;
 import com.hedgerock.spring.mvc_hibernate_aop.utils.dto.id_collectors.IdFinder;
 import org.springframework.stereotype.Controller;
@@ -39,7 +41,6 @@ public class SaveDetailsInfo extends MyController {
         }
 
         EmployeeDetails employeeDetails = employee.getEmployeeDetails();
-        employeeDetails.setDateOfBirth(attr.getDateOfBirth());
 
         if (bindingResult.hasErrors()) {
             String redirect = String.format("redirect:/updateDetailsInfo?empId=%d&empDetId=%d",
@@ -49,12 +50,9 @@ public class SaveDetailsInfo extends MyController {
         }
 
         try {
-
-            SetDefaultParameters.saveEmailsAndPhones(emails, phones, employee, employeeDetails);
-
             employeeDetails.setSocialMedia(employee.getEmployeeDetails().getSocialMedia());
+            SetDefaultParameters.saveEmailsAndPhones(emails, phones, employee, employeeDetails, this.generalInfoService);
 
-            this.employeeDetailsService.saveEmployeeDetails(employeeDetails);
             IdFinder idFinder = employeeDetails.getIdFinder();
 
             SetDefaultParameters.initSuccessFlashAttr(redirectAttributes, "Employee details", "updated");

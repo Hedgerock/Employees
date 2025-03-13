@@ -52,12 +52,6 @@ public class GeneralInfoServiceImpl implements GeneralInfoService {
 
     @Override
     @Transactional
-    public <T> void updateEntityStatistic(T entity, Long id, String queryName) {
-        this.generalInfoDAO.updateEntityStatistic(entity, id, queryName);
-    }
-
-    @Override
-    @Transactional
     public <T> List<T> findEntityWithSiblings(Long id, String entityName, Class<T> tClass) {
         return this.generalInfoDAO.findEntityWithSiblings(id, entityName, tClass);
     }
@@ -98,6 +92,12 @@ public class GeneralInfoServiceImpl implements GeneralInfoService {
     @Transactional
     public <T> List<T> getCurrentEntitiesList(Class<T> tClass, String entityName) {
         return this.generalInfoDAO.getCurrentEntitiesList(tClass, entityName);
+    }
+
+    @Override
+    @Transactional
+    public <T> List<T> getCurrentEntitiesList(Class<T> tClass, String entityName, String fieldName, Long id) {
+        return this.generalInfoDAO.getCurrentEntitiesList(tClass, entityName, fieldName, id);
     }
 
     @Override

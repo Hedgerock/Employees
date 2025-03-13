@@ -16,7 +16,6 @@ public class UserDetailsDTO {
     @NotEmpty
     private String middleName;
 
-    @NotEmpty
     private LocalDate dateOfBirth;
 
     @NotEmpty
