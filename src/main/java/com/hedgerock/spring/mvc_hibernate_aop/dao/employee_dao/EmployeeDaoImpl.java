@@ -43,10 +43,10 @@ public class EmployeeDaoImpl implements EmployeeDAO {
     public Page<Employee> getAllEmployees(Pageable pageable, boolean isLookingForFired) {
         final Session session = this.sessionFactory.getCurrentSession();
         String entityName = getEntityName("SELECT e FROM Employee e " +
-                        " JOIN FETCH e.department " +
-                        " JOIN FETCH e.nationality " +
-                        " JOIN FETCH e.city " +
-                        " JOIN FETCH e.employeeDetails " +
+                        "LEFT JOIN FETCH e.department " +
+                        "LEFT JOIN FETCH e.nationality " +
+                        "LEFT JOIN FETCH e.city " +
+                        "JOIN FETCH e.employeeDetails " +
                         " WHERE e.fireDate IS NOT NULL " +
                         "ORDER BY e.fireDate DESC",
                 "Employee");

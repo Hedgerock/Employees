@@ -10,7 +10,7 @@ public class SetupController extends MyController {
 
     protected <T, V> String initCurrentOperation(
             String entityTitle, String idTitle, T entity, V service, String redirectValue, IdCollector idCollector,
-            RedirectAttributes redirectAttributes, Class<T> tClass, boolean isNew) {
+            RedirectAttributes redirectAttributes, Class<T> tClass, boolean isNew, String lastOperator) {
         String redirectTemplate = "redirect:/showCurrent" + entityTitle + "?" + idTitle + "=";
         String methodName = "saveCurrent" + entityTitle;
         String setter = "set" + entityTitle;
@@ -27,7 +27,8 @@ public class SetupController extends MyController {
                 methodName,
                 setter,
                 tClass,
-                isNew
+                isNew,
+                lastOperator
         );
     }
 

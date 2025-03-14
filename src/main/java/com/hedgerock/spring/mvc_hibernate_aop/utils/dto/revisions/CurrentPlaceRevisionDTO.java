@@ -9,7 +9,7 @@ public class CurrentPlaceRevisionDTO {
     private int maxSalary;
     private int totalEmployees;
     private String revisionTimestamp;
-    private String updatedBy = "Hedgerock";
+    private String updatedBy;
 
     private String oldName;
     private int oldMinSalary;

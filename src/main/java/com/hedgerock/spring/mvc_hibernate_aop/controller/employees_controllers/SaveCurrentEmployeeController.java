@@ -2,8 +2,10 @@ package com.hedgerock.spring.mvc_hibernate_aop.controller.employees_controllers;
 
 import com.hedgerock.spring.mvc_hibernate_aop.controller.MyController;
 import com.hedgerock.spring.mvc_hibernate_aop.entity.Employee;
+import com.hedgerock.spring.mvc_hibernate_aop.entity.User;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +23,7 @@ public class SaveCurrentEmployeeController extends MyController {
     @PostMapping
     public String addCurrentEmployee (
             RedirectAttributes redirectAttributes,
+            Model model,
             @Valid @ModelAttribute(CURRENT_EMPLOYEE_ATTRIBUTE) Employee employee,
             BindingResult bindingResult
     ) {
@@ -29,6 +32,8 @@ public class SaveCurrentEmployeeController extends MyController {
             String redirect = "redirect:/addNewEmployee";
             return initBindingErrors(bindingResult, redirectAttributes, redirect);
         }
+
+        initOperator(employee, model);
 
         return initChanges(employee,
                 redirectAttributes,
@@ -42,6 +47,7 @@ public class SaveCurrentEmployeeController extends MyController {
     @PostMapping("/{id}")
     public String saveCurrentEmployee(
             RedirectAttributes redirectAttributes,
+            Model model,
             @Valid @ModelAttribute(CURRENT_EMPLOYEE_ATTRIBUTE) Employee employee,
             BindingResult bindingResult
     ) {
@@ -50,6 +56,8 @@ public class SaveCurrentEmployeeController extends MyController {
             String redirect = "redirect:/updateInfo?empId=" + employee.getId();
             return initBindingErrors(bindingResult, redirectAttributes, redirect);
         }
+
+        initOperator(employee, model);
 
         return initChanges(employee,
                 redirectAttributes,

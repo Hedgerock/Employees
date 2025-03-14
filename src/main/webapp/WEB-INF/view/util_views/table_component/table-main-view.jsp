@@ -18,7 +18,9 @@
                         </caption>
                     </c:if>
 
-                    <jsp:include page="${ headPath }" />
+                    <jsp:include page="${ headPath }">
+                        <jsp:param name="currentPlace" value="${ param.currentPlace }" />
+                    </jsp:include>
                 </tr>
             </thead>
             

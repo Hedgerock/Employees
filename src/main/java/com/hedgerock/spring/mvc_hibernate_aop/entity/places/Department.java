@@ -31,6 +31,9 @@ public class Department {
     @Audited
     private List<Employee> employee;
 
+    @Column(name="last_operator")
+    private String lastOperator;
+
     public Department() {
         this.minSalary = 0;
         this.maxSalary = 0;
@@ -90,6 +93,14 @@ public class Department {
 
     public void setTotalEmployees(Integer totalEmployees) {
         this.totalEmployees = totalEmployees;
+    }
+
+    public String getLastOperator() {
+        return lastOperator;
+    }
+
+    public void setLastOperator(String lastOperator) {
+        this.lastOperator = lastOperator;
     }
 
     @Override

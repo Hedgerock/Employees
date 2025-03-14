@@ -32,6 +32,9 @@ public class Nationality {
     @Audited
     private List<Employee> employee;
 
+    @Column(name="last_operator")
+    private String lastOperator;
+
 
     public Nationality() {
         this.minSalary = 0;
@@ -88,6 +91,14 @@ public class Nationality {
 
     public Integer getTotalEmployees() {
         return totalEmployees;
+    }
+
+    public String getLastOperator() {
+        return lastOperator;
+    }
+
+    public void setLastOperator(String lastOperator) {
+        this.lastOperator = lastOperator;
     }
 
     public void setTotalEmployees(Integer totalEmployees) {

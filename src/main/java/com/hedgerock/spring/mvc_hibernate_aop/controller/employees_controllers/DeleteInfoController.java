@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
-import java.util.Objects;
+import java.util.Optional;
 
 import static com.hedgerock.spring.mvc_hibernate_aop.utils.default_parameters.SetDefaultParameters.*;
 
@@ -43,15 +43,28 @@ public class DeleteInfoController extends MyController {
 
         String entity = employee.getFirstName();
 
+        initDelete(employee, redirectAttributes, entity);
+
+        return getCurrentRedirect(pageName, depId, cityId, natId, page);
+    }
+
+
+    private void initDelete(Employee employee, RedirectAttributes redirectAttributes, String entity) {
         try {
             employee.setFireDate(LocalDate.now());
             Department department = employee.getDepartment();
             City city = employee.getCity();
             Nationality nationality = employee.getNationality();
 
-            Long dId = Objects.requireNonNullElse(department.getId(), null);
-            Long cId = Objects.requireNonNullElse(city.getId(), null);
-            Long nId = Objects.requireNonNullElse(nationality.getId(), null);
+            Long dId = Optional.ofNullable(department)
+                    .map(Department::getId)
+                    .orElse(null);
+            Long cId = Optional.ofNullable(city)
+                    .map(City::getId)
+                    .orElse(null);
+            Long nId = Optional.ofNullable(nationality)
+                    .map(Nationality::getId)
+                    .orElse(null);
 
             this.employeeService.saveCurrentEmployee(employee, dId, cId, nId);
 
@@ -59,8 +72,5 @@ public class DeleteInfoController extends MyController {
         } catch (Exception e) {
             SetDefaultParameters.initFailedFlashAttr(redirectAttributes, entity, "delete", e);
         }
-
-        return getCurrentRedirect(pageName, depId, cityId, natId, page);
     }
-
 }

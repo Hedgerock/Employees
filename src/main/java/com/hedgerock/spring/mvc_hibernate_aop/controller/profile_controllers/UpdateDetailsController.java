@@ -48,7 +48,7 @@ public class UpdateDetailsController extends HeadProfileController {
         user.setUserDetails(userDetails);
 
         this.generalInfoService.saveCurrentEntity(user);
-
+        SetDefaultParameters.initSuccessFlashAttr(redirectAttributes, "User details", "updated");
         return "redirect:/settings";
     }
 

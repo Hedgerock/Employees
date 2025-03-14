@@ -804,6 +804,7 @@ input, select, option {
     height: var(--allArea);
 
     padding: var(--superThinPad) var(--medPad);
+    gap: var(--medGap);
 }
 
 .details-header {
@@ -878,6 +879,10 @@ input, select, option {
     display: var(--flexDisplay);
     flex-direction: var(--flexDirection);
     gap: var(--betweenMedAndHugeGap);
+
+    position: sticky;
+    top: 10px;
+    height: 500px;
 }
 
 .details-header-image__content {
@@ -1177,6 +1182,8 @@ input, select, option {
     align-items: var(--flexAi);
 
     margin-top: auto;
+
+    padding-bottom: var(--thinPad);
 }
 
 .siblings__link {
@@ -1589,7 +1596,7 @@ input, select, option {
     left: 50%;
     transform: translate(-50%, -50%);
 
-    width: 700px;
+    width: 900px;
     height: 80lvh;
     
     pointer-events: none;
@@ -1617,6 +1624,8 @@ input, select, option {
     font-size: 2rem;
     background: var(--bgALterTableClr);
 
+    z-index: 100;
+
     width: 45px;
     height: 150px;
 }
@@ -1640,7 +1649,13 @@ input, select, option {
     transform: translateX(-50%);
     display: var(--flexDisplay);
     align-items: var(--flexAi);
+    justify-content: var(--flexJc);
     gap: var(--medGap);
+
+    width: 80%;
+    flex-wrap: wrap;
+    overflow-y: auto;
+    height: 5rem;
 }
 
 .micro-image {
@@ -1677,7 +1692,7 @@ input, select, option {
     width: var(--allArea);
 
     min-height: 2rem;
-    background: var(--mainRevTxtClr);
+    background: var(--mainBgClr);
 }
 
 .pagination__link,
@@ -1788,6 +1803,8 @@ footer span {
     display: var(--flexDisplay);
     justify-content: var(--flexJcSpaceBetween);
     height: var(--allArea);
+
+    gap: var(--hugeGap);
 }
 
 .profile-current-page {
@@ -2041,13 +2058,103 @@ footer span {
     }
 }
 
+@media (max-width: 945px) {
+    .details-left-side {
+        position: static;
+        height: auto;
+    }
+
+    .details-header {
+        flex-direction: var(--flexDirection);
+    }
+
+    .details-header-image {
+        align-self: var(--alignSelf);
+    }
+
+    .slider-image {
+        width: 500px;
+        height: 50lvh;
+    }
+
+    .slider-image__button {
+        height: 100px;
+        width: 35px;
+    }
+
+    .micro-image {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media (max-width: 750px) {
+    html {
+        font-size: 15px;
+    }
+
+    .find-employee-form__input {
+        width: 300px;
+    }
+
+    .employee-details-list__item {
+        overflow-x: auto;
+    }
+
+    .profile-content {
+        flex-direction: var(--flexDirection);
+    }
+
+    .profile-menu,
+    .profile-current-page {
+        width: var(--allArea);
+    }
+
+    footer span {
+        font-size: var(--fontSize20);
+    }
+}
+
 @media (max-width: 600px) {
     html {
         font-size: 14px;
     }
 
-    .responsive-table {
-        padding: 0;
+    .authorized-user-list {
+        right: 1.2rem;
+    }
+
+    .responsive-table,
+    .details {
+        padding: var(--zeroPad);
+    }
+
+    .slider-image {
+        width: 440px;
+        height: 30lvh;
+    }
+
+    .micro-slider {
+        bottom: 10%;
+    }
+
+    .siblings__link {
+        min-width: 130px;
+        overflow: hidden;
+    }
+
+    .pagination__link, .pagination__current-page {
+        min-width: 35px;
+        min-height: 35px;
+    }
+
+    .footer-list__item {
+        width: 3rem;
+    }
+
+    .not-found-image__src {
+        width: 300px;
+        height: 300px;
     }
 }
 
@@ -2057,7 +2164,7 @@ footer span {
     }
 
     .find-employee-form {
-        margin-left: 0;
+        margin: 0;
     }
 
     .find-employee-form__input {
@@ -2073,10 +2180,84 @@ footer span {
     .burger-menu-element__button {
         top: 20px;
     }
+
+    .current-user-options__link {
+        min-width: 50px;
+    }
+
+    .details-header-image {
+        width: 260px;
+        height: 15rem;
+    }
+
+    .slider-image {
+        width: 300px;
+        height: 25lvh;
+    }
+
+    .employee-details-list__item,
+    .user-content__value,
+    .text-area-box__button,
+    footer span {
+        font-size: 1rem;
+    }
+
+    .employee-details-list__item::before {
+        min-width: 120px;
+    }
+
+    .current-employee-form-label,
+    .current-employee-form-label__input_typing-option,
+    .current-employee-form__submit-button,
+    .current-employee-form-container {
+        width: var(--allArea);
+    }
+
+    .buttons-box {
+        justify-content: var(--flexJcSpaceBetween);
+    }
+
+    .text-area-box__button {
+        width: 150px;
+    }
+
+    .head {
+        flex-direction: var(--flexDirection);
+    }
+
+    .user-img {
+        width: 100px;
+        height: 100px;
+
+        font-size: 4rem;
+    }
+
+    .user-details__item {
+        font-size: 1rem;
+    }
+
+    .user-form__label,
+    .user-form__confirm-button {
+        width: 100%;
+    }
+
+    .user-form__button {
+        right: 10px;
+    }
+}
+
+@media (max-width: 400px) {
+    .values-list-item__index {
+        display: none !important;
+    }
 }
 
 @media (max-width: 320px) {
     body {
         min-width: 320px;
+    }
+
+    .slider {
+        width: 320px;
     }
 }

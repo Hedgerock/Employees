@@ -13,6 +13,8 @@
     </li>
     
 
-    <script src="${ pageContext.request.contextPath }/js/employeeDescription.js"></script>
+    <c:if test="${ not isFired }">
+        <script src="${ pageContext.request.contextPath }/js/employeeDescription.js"></script>
+    </c:if>
 </body>
 </html>

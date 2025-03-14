@@ -41,7 +41,7 @@
         </jsp:include>
 
         <c:choose>
-            <c:when test="${ param.currentPlace != 'CurrentDepartment' }">
+            <c:when test="${ param.currentPlace != 'Department' }">
                 <jsp:include page = "employee_rows/department-row-view.jsp">
                     <jsp:param name = "currentDepartment" value = "${ currentDepartment }" />
                     <jsp:param name = "updateButton" value = "${ updateButton }" />

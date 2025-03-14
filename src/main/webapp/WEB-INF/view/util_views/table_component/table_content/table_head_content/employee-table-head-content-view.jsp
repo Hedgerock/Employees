@@ -14,9 +14,9 @@
     <th class="content-table-row__header">First_name</th>
     <th class="content-table-row__header">Last_name</th>
     <th class="content-table-row__header">Middle_name</th>
-
+    
     <c:choose>
-        <c:when test="${ param.currentPlace != 'CurrentDepartment' }">
+        <c:when test="${ param.currentPlace != 'Department' }">
             <th class="content-table-row__header">Department</th>
         </c:when>
     </c:choose>

@@ -28,7 +28,7 @@
             class="current-employee-form__submit-button"
         >   Confirm
         </button>
-        
+
         <div class="table-wrapper">
             <table class="content-table content-table_selected-employees">
                 <caption class="content-table-caption">

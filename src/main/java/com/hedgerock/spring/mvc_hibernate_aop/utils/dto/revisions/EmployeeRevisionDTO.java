@@ -15,7 +15,7 @@ public class EmployeeRevisionDTO {
     private int salary;
     private String revisionTimestamp;
     private String departmentName;
-    private String updatedBy = "Hedgerock";
+    private String updatedBy;
 
     private String oldFirstName;
     private String oldLastName;

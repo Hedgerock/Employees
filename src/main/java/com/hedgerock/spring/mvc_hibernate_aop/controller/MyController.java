@@ -1,5 +1,6 @@
 package com.hedgerock.spring.mvc_hibernate_aop.controller;
 
+import com.hedgerock.spring.mvc_hibernate_aop.entity.Employee;
 import com.hedgerock.spring.mvc_hibernate_aop.entity.User;
 import com.hedgerock.spring.mvc_hibernate_aop.service.city_service.CityService;
 import com.hedgerock.spring.mvc_hibernate_aop.service.department_service.DepartmentService;
@@ -24,6 +25,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -101,4 +103,20 @@ public abstract class MyController {
         model.addAttribute("searchParams", search);
     }
 
+    protected<T> String  initOperator(T entity, Model model) {
+        User user = (User) model.getAttribute("authorizedUser");
+
+        if (user == null) {
+            throw new RuntimeException("User not found");
+        }
+
+        try {
+            Method method = entity.getClass().getDeclaredMethod("setLastOperator", String.class);
+            method.invoke(entity, user.getUsername());
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to set operator: " + e.getMessage());
+        }
+
+        return user.getUsername();
+    }
 }

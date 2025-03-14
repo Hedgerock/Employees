@@ -218,12 +218,13 @@ public class SetDefaultParameters {
     }
 
     public static <T> void addEmployeesToCurrentPlace(
-            List<Long> ids, EmployeeService employeeService, String method, T entity, Class<T>curClass) {
+            List<Long> ids, EmployeeService employeeService, String method, T entity, Class<T>curClass, String lastOperator) {
         List<Employee>employees = employeeService.getSelectedEmployees(ids);
 
         try {
             for (Employee employee: employees) {
                 Method curMethod = employee.getClass().getMethod(method, curClass);
+                employee.setLastOperator(lastOperator);
                 curMethod.invoke(employee, entity);
             }
             employeeService.saveAllEmployees(employees);
@@ -401,7 +402,8 @@ public class SetDefaultParameters {
             String methodName,
             String setter,
             Class<T> curClass,
-            boolean isNew
+            boolean isNew,
+            String lastOperator
     ) {
         String operation = isNew ? "created" : "updated";
 
@@ -413,7 +415,8 @@ public class SetDefaultParameters {
                     service,
                     methodName,
                     setter,
-                    curClass
+                    curClass,
+                    lastOperator
             );
 
             initSuccessFlashAttrMethod(entityTitle, currentPlace, redirectAttributes, operation);
@@ -438,7 +441,8 @@ public class SetDefaultParameters {
             V service,
             String methodName,
             String setter,
-            Class<T>curClass
+            Class<T>curClass,
+            String lastOperator
     ) {
         try {
             Method method = service.getClass().getDeclaredMethod(methodName, entity.getClass());
@@ -447,7 +451,7 @@ public class SetDefaultParameters {
 
             if (ids != null && !ids.isEmpty()) {
                 addEmployeesToCurrentPlace(
-                        ids, employeeService, setter, newEntity, curClass
+                        ids, employeeService, setter, newEntity, curClass, lastOperator
                 );
             }
 

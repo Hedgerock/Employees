@@ -90,6 +90,9 @@ public class Employee {
     @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
     private Nationality nationality;
 
+    @Column(name="last_operator")
+    private String lastOperator;
+
     @Transient
     private SelectionCollector selectionCollector = new SelectionCollector();
 
@@ -260,6 +263,14 @@ public class Employee {
 
     public void setNationality(Nationality nationality) {
         this.nationality = nationality;
+    }
+
+    public String getLastOperator() {
+        return lastOperator;
+    }
+
+    public void setLastOperator(String lastOperator) {
+        this.lastOperator = lastOperator;
     }
 
     @Override

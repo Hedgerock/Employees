@@ -4,6 +4,7 @@ package com.hedgerock.spring.mvc_hibernate_aop.controller.current_place_controll
 import com.hedgerock.spring.mvc_hibernate_aop.entity.places.Department;
 import com.hedgerock.spring.mvc_hibernate_aop.utils.dto.id_collectors.IdCollector;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,20 +20,24 @@ public class SaveCurrentDepartmentController extends SetupController {
     public String addCurrentDepartment(
             @ModelAttribute("currentDepartment") Department department,
             @ModelAttribute("idCollector")IdCollector idCollector,
+            Model model,
             RedirectAttributes redirectAttributes
     ) {
+        String operator = initOperator(department, model);
         return initCurrentOperation(ENTITY_TITLE, ENTITY_ID_TITLE, department, this.departmentService,
-                "redirect:/addNewDepartment", idCollector, redirectAttributes, Department.class, true);
+                "redirect:/addNewDepartment", idCollector, redirectAttributes, Department.class, true, operator);
     }
 
     @PostMapping("/{depId}")
     public String saveCurrentDepartment(
             @ModelAttribute("currentDepartment") Department department,
+            Model model,
             @ModelAttribute("idCollector")IdCollector idCollector,
             RedirectAttributes redirectAttributes) {
         String redirect = "redirect:/updateCurrentDepartment?depId=" + department.getId();
+        String operator = initOperator(department, model);
         return initCurrentOperation(ENTITY_TITLE, ENTITY_ID_TITLE, department, this.departmentService,
-                redirect, idCollector, redirectAttributes, Department.class, false);
+                redirect, idCollector, redirectAttributes, Department.class, false, operator);
     }
 
 }

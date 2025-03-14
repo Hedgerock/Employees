@@ -3,6 +3,7 @@ package com.hedgerock.spring.mvc_hibernate_aop.controller.current_place_controll
 import com.hedgerock.spring.mvc_hibernate_aop.entity.places.Nationality;
 import com.hedgerock.spring.mvc_hibernate_aop.utils.dto.id_collectors.IdCollector;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,23 +21,27 @@ public class SaveNationalityController extends SetupController {
     public String addNationality(
             @ModelAttribute("nationality") Nationality nationality,
             @ModelAttribute("idCollector")IdCollector idCollector,
+            Model model,
             RedirectAttributes redirectAttributes
             )
     {
+        String operator = initOperator(nationality, model);
         return initCurrentOperation(ENTITY_TITLE, ENTITY_ID_TITLE, nationality, this.nationalityService,
-                "redirect:/addNewNationality", idCollector, redirectAttributes, Nationality.class, true);
+                "redirect:/addNewNationality", idCollector, redirectAttributes, Nationality.class, true, operator);
     }
 
     @PostMapping("/{natId}")
     public String updateNationality(
             @ModelAttribute("nationality") Nationality nationality,
             @ModelAttribute("idCollector")IdCollector idCollector,
+            Model model,
             RedirectAttributes redirectAttributes
             )
     {
         String redirect = "redirect:/updateNationality?natId=";
+        String operator = initOperator(nationality, model);
         return initCurrentOperation(ENTITY_TITLE, ENTITY_ID_TITLE, nationality, this.nationalityService,
-                redirect, idCollector, redirectAttributes, Nationality.class, false);
+                redirect, idCollector, redirectAttributes, Nationality.class, false, operator);
     }
 
 }

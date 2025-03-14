@@ -28,7 +28,7 @@ public class HistoryDAOImpl implements HistoryDAO {
     private SessionFactory sessionFactory;
 
     private static final String TEMPLATE_OF_EMPLOYEE_REVISION_QUERY = "SELECT e.id, e.REV, e.REVTYPE, e.department_id, e.employee_details_id, " +
-            "e.first_name, e.hire_date, e.last_name, e.middle_name, e.salary, r.REVTSTMP, d.name " +
+            "e.first_name, e.hire_date, e.last_name, e.middle_name, e.salary, r.REVTSTMP, d.name, e.last_operator " +
             "FROM employees_aud e " +
             "JOIN revinfo r ON e.REV = r.REV " +
             "LEFT JOIN departments d ON e.department_id = d.id " +
@@ -209,7 +209,8 @@ public class HistoryDAOImpl implements HistoryDAO {
                 prefix + "min_salary, " +
                 prefix + "max_salary, " +
                 prefix + "total_employees, " +
-                "r.REVTSTMP " +
+                "r.REVTSTMP, " +
+                prefix + "last_operator " +
                 "FROM " +
                 entityName + "_aud " + title + " " +
                 "JOIN revinfo r ON " +
@@ -233,6 +234,7 @@ public class HistoryDAOImpl implements HistoryDAO {
         dto.setSalary(setCurrentFiled(Integer.class, row[9]));
         initDateFormat(row[10], dto);
         dto.setDepartmentName(setCurrentFiled(String.class, row[11]));
+        dto.setUpdatedBy(setCurrentFiled(String.class, row[12]));
 
         if (dto.getRevType() == 1 && previousDto != null) {
             dto.setOldFirstName(previousDto.getFirstName());
@@ -242,6 +244,7 @@ public class HistoryDAOImpl implements HistoryDAO {
             dto.setOldHireDate(previousDto.getHireDate());
             dto.setOldSalary(previousDto.getSalary());
             dto.setOldDepartmentName(previousDto.getDepartmentName());
+            dto.setOldDepartmentName(previousDto.getUpdatedBy());
         }
 
         return dto;
@@ -281,6 +284,7 @@ public class HistoryDAOImpl implements HistoryDAO {
         dto.setMaxSalary(setCurrentFiled(Integer.class, row[5]));
         dto.setTotalEmployees(setCurrentFiled(Integer.class, row[6]));
         initDateFormat(row[7], dto);
+        dto.setUpdatedBy(setCurrentFiled(String.class, row[8]));
 
         if (dto.getRevType() == 1 && previousDto != null) {
             dto.setOldName(previousDto.getName());

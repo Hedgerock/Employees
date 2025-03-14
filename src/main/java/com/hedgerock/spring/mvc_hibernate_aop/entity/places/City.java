@@ -32,6 +32,9 @@ public class City {
     @Audited
     private List<Employee> employee;
 
+    @Column(name="last_operator")
+    private String lastOperator;
+
     public City() {
         this.minSalary = 0;
         this.maxSalary = 0;
@@ -97,6 +100,14 @@ public class City {
 
     public void setEmployee(List<Employee> employee) {
         this.employee = employee;
+    }
+
+    public String getLastOperator() {
+        return lastOperator;
+    }
+
+    public void setLastOperator(String lastOperator) {
+        this.lastOperator = lastOperator;
     }
 
     @Override
