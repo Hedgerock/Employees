@@ -9,8 +9,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class PictureServiceImpl implements PictureService {
 
-    @Autowired
-    private PictureDAO pictureDAO;
+    private final PictureDAO pictureDAO;
+
+    public PictureServiceImpl(PictureDAO pictureDAO) {
+        this.pictureDAO = pictureDAO;
+    }
 
     @Override
     @Transactional

@@ -10,9 +10,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class PhoneDAOImpl implements  PhoneDAO {
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
+    public PhoneDAOImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public PhoneNumber findCurrentPhoneNumber(Long id) {

@@ -37,9 +37,11 @@ public class GeneralInfoDAOImpl implements GeneralInfoDAO {
             "LEFT JOIN FETCH e.city " +
             "LEFT JOIN FETCH e.nationality ";
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
+    public GeneralInfoDAOImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public GeneralInfo getGeneralInfo() {

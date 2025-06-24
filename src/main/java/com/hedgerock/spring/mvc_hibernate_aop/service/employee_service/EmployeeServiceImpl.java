@@ -3,7 +3,6 @@ package com.hedgerock.spring.mvc_hibernate_aop.service.employee_service;
 import com.hedgerock.spring.mvc_hibernate_aop.dao.employee_dao.EmployeeDAO;
 import com.hedgerock.spring.mvc_hibernate_aop.entity.Employee;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -13,8 +12,11 @@ import java.util.List;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-    @Autowired
-    private EmployeeDAO employeeDAO;
+    private final EmployeeDAO employeeDAO;
+
+    public EmployeeServiceImpl(EmployeeDAO employeeDAO) {
+        this.employeeDAO = employeeDAO;
+    }
 
     @Override
     @Transactional

@@ -2,11 +2,22 @@ package com.hedgerock.spring.mvc_hibernate_aop.controller.employee_details_contr
 
 import com.hedgerock.spring.mvc_hibernate_aop.controller.MyController;
 import com.hedgerock.spring.mvc_hibernate_aop.entity.Employee;
-import com.hedgerock.spring.mvc_hibernate_aop.entity.employee_details.Email;
 import com.hedgerock.spring.mvc_hibernate_aop.entity.employee_details.EmployeeDetails;
-import com.hedgerock.spring.mvc_hibernate_aop.entity.employee_details.PhoneNumber;
+import com.hedgerock.spring.mvc_hibernate_aop.service.city_service.CityService;
+import com.hedgerock.spring.mvc_hibernate_aop.service.department_service.DepartmentService;
+import com.hedgerock.spring.mvc_hibernate_aop.service.email_service.EmailService;
+import com.hedgerock.spring.mvc_hibernate_aop.service.employee_details_service.EmployeeDetailsService;
+import com.hedgerock.spring.mvc_hibernate_aop.service.employee_service.EmployeeService;
+import com.hedgerock.spring.mvc_hibernate_aop.service.general_info_service.GeneralInfoService;
+import com.hedgerock.spring.mvc_hibernate_aop.service.histrory_service.HistoryService;
+import com.hedgerock.spring.mvc_hibernate_aop.service.nationality_service.NationalityService;
+import com.hedgerock.spring.mvc_hibernate_aop.service.phoneService.PhoneService;
+import com.hedgerock.spring.mvc_hibernate_aop.service.picture_service.PictureService;
+import com.hedgerock.spring.mvc_hibernate_aop.service.user_service.UserService;
 import com.hedgerock.spring.mvc_hibernate_aop.utils.default_parameters.SetDefaultParameters;
 import com.hedgerock.spring.mvc_hibernate_aop.utils.dto.id_collectors.IdFinder;
+import jakarta.servlet.ServletContext;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,6 +33,26 @@ import static com.hedgerock.spring.mvc_hibernate_aop.utils.default_parameters.Se
 
 @Controller
 public class SaveDetailsInfo extends MyController {
+    public SaveDetailsInfo(
+            PasswordEncoder passwordEncoder,
+            EmployeeService employeeService,
+            DepartmentService departmentService,
+            EmployeeDetailsService employeeDetailsService,
+            HistoryService historyService,
+            CityService cityService,
+            GeneralInfoService generalInfoService,
+            NationalityService nationalityService,
+            UserService userService,
+            PictureService pictureService,
+            EmailService emailDetailsService,
+            PhoneService phoneNumberDetailsService,
+            ServletContext servletContext
+    ) {
+        super(passwordEncoder, employeeService, departmentService, employeeDetailsService, historyService, cityService,
+                generalInfoService, nationalityService, userService, pictureService, emailDetailsService,
+                phoneNumberDetailsService, servletContext
+        );
+    }
 
     @RequestMapping("/saveEmployeeDetails")
     public String saveEmployeesDetails(

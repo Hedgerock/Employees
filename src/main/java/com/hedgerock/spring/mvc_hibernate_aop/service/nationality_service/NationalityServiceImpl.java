@@ -11,8 +11,11 @@ import java.util.Optional;
 
 @Service
 public class NationalityServiceImpl implements NationalityService{
-    @Autowired
-    private NationalityDAO nationalityDAO;
+    private final NationalityDAO nationalityDAO;
+
+    public NationalityServiceImpl(NationalityDAO nationalityDAO) {
+        this.nationalityDAO = nationalityDAO;
+    }
 
     @Override
     @Transactional

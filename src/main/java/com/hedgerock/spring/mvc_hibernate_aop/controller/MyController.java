@@ -1,6 +1,5 @@
 package com.hedgerock.spring.mvc_hibernate_aop.controller;
 
-import com.hedgerock.spring.mvc_hibernate_aop.entity.Employee;
 import com.hedgerock.spring.mvc_hibernate_aop.entity.User;
 import com.hedgerock.spring.mvc_hibernate_aop.service.city_service.CityService;
 import com.hedgerock.spring.mvc_hibernate_aop.service.department_service.DepartmentService;
@@ -35,44 +34,49 @@ import static com.hedgerock.spring.mvc_hibernate_aop.utils.Views.SEARCH_EMPLOYEE
 
 @Controller
 public abstract class MyController {
-    @Autowired
-    protected PasswordEncoder passwordEncoder;
+    protected final PasswordEncoder passwordEncoder;
+    protected final EmployeeService employeeService;
+    protected final DepartmentService departmentService;
+    protected final EmployeeDetailsService employeeDetailsService;
+    protected final HistoryService historyService;
+    protected final CityService cityService;
+    protected final GeneralInfoService generalInfoService;
+    protected final NationalityService nationalityService;
+    protected final UserService userService;
+    protected final PictureService pictureService;
+    protected final EmailService emailDetailsService;
+    protected final PhoneService phoneNumberDetailsService;
+    protected final ServletContext servletContext;
 
-    @Autowired
-    protected EmployeeService employeeService;
-
-    @Autowired
-    protected DepartmentService departmentService;
-
-    @Autowired
-    protected EmployeeDetailsService employeeDetailsService;
-
-    @Autowired
-    protected HistoryService historyService;
-
-    @Autowired
-    protected CityService cityService;
-
-    @Autowired
-    protected GeneralInfoService generalInfoService;
-
-    @Autowired
-    protected NationalityService nationalityService;
-
-    @Autowired
-    protected UserService userService;
-
-    @Autowired
-    protected PictureService pictureService;
-
-    @Autowired
-    protected EmailService emailDetailsService;
-
-    @Autowired
-    protected PhoneService phoneNumberDetailsService;
-
-    @Autowired
-    protected ServletContext servletContext;
+    public MyController(
+            PasswordEncoder passwordEncoder,
+            EmployeeService employeeService,
+            DepartmentService departmentService,
+            EmployeeDetailsService employeeDetailsService,
+            HistoryService historyService,
+            CityService cityService,
+            GeneralInfoService generalInfoService,
+            NationalityService nationalityService,
+            UserService userService,
+            PictureService pictureService,
+            EmailService emailDetailsService,
+            PhoneService phoneNumberDetailsService,
+            ServletContext servletContext
+    ) {
+        this.passwordEncoder = passwordEncoder;
+        this.employeeService = employeeService;
+        this.departmentService = departmentService;
+        this.employeeDetailsService = employeeDetailsService;
+        this.historyService = historyService;
+        this.cityService = cityService;
+        this.generalInfoService = generalInfoService;
+        this.nationalityService = nationalityService;
+        this.userService = userService;
+        this.pictureService = pictureService;
+        this.emailDetailsService = emailDetailsService;
+        this.phoneNumberDetailsService = phoneNumberDetailsService;
+        this.servletContext = servletContext;
+    }
 
     protected final List<String> allowedTypes = Arrays.asList(
             "image/png", "image/jpeg", "image/jpg", "image/webp");

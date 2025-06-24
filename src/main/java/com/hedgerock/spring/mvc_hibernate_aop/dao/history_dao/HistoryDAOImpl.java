@@ -24,8 +24,11 @@ import static com.hedgerock.spring.mvc_hibernate_aop.utils.default_parameters.Se
 
 @Repository
 public class HistoryDAOImpl implements HistoryDAO {
-    @Autowired
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
+
+    public HistoryDAOImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     private static final String TEMPLATE_OF_EMPLOYEE_REVISION_QUERY = "SELECT e.id, e.REV, e.REVTYPE, e.department_id, e.employee_details_id, " +
             "e.first_name, e.hire_date, e.last_name, e.middle_name, e.salary, r.REVTSTMP, d.name, e.last_operator " +

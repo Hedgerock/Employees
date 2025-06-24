@@ -4,7 +4,6 @@ import com.hedgerock.spring.mvc_hibernate_aop.entity.Employee;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -12,13 +11,17 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 import static com.hedgerock.spring.mvc_hibernate_aop.utils.DAOUtil.*;
-import static com.hedgerock.spring.mvc_hibernate_aop.utils.QueryTemplates.*;
+import static com.hedgerock.spring.mvc_hibernate_aop.utils.QueryTemplates.JOINS;
+import static com.hedgerock.spring.mvc_hibernate_aop.utils.QueryTemplates.TEMPLATE_OF_JOINING_QUERY;
 
 @Repository
 public class EmployeeDaoImpl implements EmployeeDAO {
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
+
+    public EmployeeDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public Page<Employee> getAllEmployees(Pageable pageable) {

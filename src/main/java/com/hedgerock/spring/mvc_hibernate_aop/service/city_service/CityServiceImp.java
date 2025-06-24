@@ -3,7 +3,6 @@ package com.hedgerock.spring.mvc_hibernate_aop.service.city_service;
 import com.hedgerock.spring.mvc_hibernate_aop.dao.city_dao.CityDAO;
 import com.hedgerock.spring.mvc_hibernate_aop.entity.places.City;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,8 +11,11 @@ import java.util.Optional;
 @Service
 public class CityServiceImp implements CityService {
 
-    @Autowired
-    private CityDAO cityDao;
+    private final CityDAO cityDao;
+
+    public CityServiceImp(CityDAO cityDao) {
+        this.cityDao = cityDao;
+    }
 
     @Override
     @Transactional

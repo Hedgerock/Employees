@@ -9,8 +9,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class PictureDAOImpl implements PictureDAO {
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
+
+    public PictureDAOImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public Picture savePicture(Picture picture) {

@@ -9,9 +9,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class PhoneServiceImpl implements PhoneService {
 
-    @Autowired
-    private PhoneDAO phoneDAO;
+    private final PhoneDAO phoneDAO;
 
+    public PhoneServiceImpl(PhoneDAO phoneDAO) {
+        this.phoneDAO = phoneDAO;
+    }
 
     @Override
     @Transactional

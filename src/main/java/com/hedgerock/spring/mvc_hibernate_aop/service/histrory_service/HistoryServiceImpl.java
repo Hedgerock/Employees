@@ -2,19 +2,22 @@ package com.hedgerock.spring.mvc_hibernate_aop.service.histrory_service;
 
 import com.hedgerock.spring.mvc_hibernate_aop.dao.history_dao.HistoryDAO;
 import com.hedgerock.spring.mvc_hibernate_aop.utils.dto.revisions.CurrentPlaceRevisionDTO;
+import com.hedgerock.spring.mvc_hibernate_aop.utils.dto.revisions.EmployeeRevisionDTO;
 import com.hedgerock.spring.mvc_hibernate_aop.utils.dto.single_element.CurrentPlaceDTO;
 import com.hedgerock.spring.mvc_hibernate_aop.utils.dto.single_element.EmployeeDTO;
-import com.hedgerock.spring.mvc_hibernate_aop.utils.dto.revisions.EmployeeRevisionDTO;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
 public class HistoryServiceImpl implements HistoryService {
-    @Autowired
-    private HistoryDAO historyDAO;
+
+    private final HistoryDAO historyDAO;
+
+    public HistoryServiceImpl(HistoryDAO historyDAO) {
+        this.historyDAO = historyDAO;
+    }
 
     @Override
     @Transactional

@@ -3,7 +3,6 @@ package com.hedgerock.spring.mvc_hibernate_aop.service.general_info_service;
 import com.hedgerock.spring.mvc_hibernate_aop.dao.general_info_dao.GeneralInfoDAO;
 import com.hedgerock.spring.mvc_hibernate_aop.utils.dto.GeneralInfo;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -14,9 +13,11 @@ import java.util.Optional;
 @Service
 public class GeneralInfoServiceImpl implements GeneralInfoService {
 
-    @Autowired
-    private GeneralInfoDAO generalInfoDAO;
+    private final GeneralInfoDAO generalInfoDAO;
 
+    public GeneralInfoServiceImpl(GeneralInfoDAO generalInfoDAO) {
+        this.generalInfoDAO = generalInfoDAO;
+    }
 
     @Override
     @Transactional

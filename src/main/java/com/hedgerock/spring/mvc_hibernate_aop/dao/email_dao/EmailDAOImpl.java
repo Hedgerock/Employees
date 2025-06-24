@@ -10,9 +10,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class EmailDAOImpl implements EmailDAO {
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
+    public EmailDAOImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public Email findCurrentEmail(Long id) {

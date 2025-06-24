@@ -3,7 +3,6 @@ package com.hedgerock.spring.mvc_hibernate_aop.service.department_service;
 import com.hedgerock.spring.mvc_hibernate_aop.dao.department_dao.DepartmentDAO;
 import com.hedgerock.spring.mvc_hibernate_aop.entity.places.Department;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,8 +10,12 @@ import java.util.Optional;
 
 @Service
 public class DepartmentServiceImp implements DepartmentService {
-    @Autowired
-    DepartmentDAO departmentDao;
+
+    private final DepartmentDAO departmentDao;
+
+    public DepartmentServiceImp(DepartmentDAO departmentDao) {
+        this.departmentDao = departmentDao;
+    }
 
     @Override
     @Transactional

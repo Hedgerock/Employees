@@ -13,9 +13,11 @@ import java.util.Optional;
 @Repository
 public class CityDAOImp implements CityDAO {
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
+    public CityDAOImp(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public List<City> getCities() {

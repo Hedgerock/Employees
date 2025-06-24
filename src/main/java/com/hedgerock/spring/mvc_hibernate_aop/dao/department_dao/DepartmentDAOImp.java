@@ -16,8 +16,11 @@ import static com.hedgerock.spring.mvc_hibernate_aop.utils.QueryTemplates.*;
 @Repository
 public class DepartmentDAOImp implements DepartmentDAO {
 
-    @Autowired
-    SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
+
+    public DepartmentDAOImp(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public Optional<Department> findCurrentDepartmentByName(String name) {

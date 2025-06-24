@@ -13,9 +13,11 @@ import java.util.Optional;
 @Repository
 public class NationalityDAOImpl implements NationalityDAO {
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
+    public NationalityDAOImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public List<Nationality> getNationalities() {

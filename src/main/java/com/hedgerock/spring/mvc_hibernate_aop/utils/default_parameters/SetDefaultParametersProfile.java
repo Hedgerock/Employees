@@ -4,7 +4,6 @@ import com.hedgerock.spring.mvc_hibernate_aop.entity.Authority;
 import com.hedgerock.spring.mvc_hibernate_aop.entity.User;
 import com.hedgerock.spring.mvc_hibernate_aop.service.general_info_service.GeneralInfoService;
 import com.hedgerock.spring.mvc_hibernate_aop.utils.dto.user_dtos.AddUserDTO;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
